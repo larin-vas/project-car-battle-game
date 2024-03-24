@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Code.Physics
 {
-    public class CollisionTrigger
+    public class CollisionTrigger : ICollisionTrigger
     {
         private readonly Collider2D _collider;
 

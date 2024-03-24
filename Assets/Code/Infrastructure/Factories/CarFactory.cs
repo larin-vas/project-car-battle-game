@@ -57,7 +57,7 @@ namespace Code.Infrastructure.Factories
                 wheelControllers.Add(_wheelFactory.Create(view.transform, wheelConfig));
             }
 
-            List<GunController> gunControllers = new List<GunController>();
+            List<IWeapon> gunControllers = new List<IWeapon>();
 
             foreach (GunConfig gunConfig in config.Guns)
             {

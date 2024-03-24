@@ -2,7 +2,6 @@ using Code.AI.Pathfinding;
 using Code.Car;
 using Code.Common.Interfaces;
 using Code.Infrastructure.Pools;
-using Code.Infrastructure.ScriptableObjects;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -15,13 +14,13 @@ namespace Code.AI
 
         private readonly ControllableTransport _controlledObject;
 
-        private readonly IMovable _targetObject;
+        private readonly IReadOnlyMovable _targetObject;
 
         private readonly AIMovableInput _input;
 
         private readonly IPool<ControllableTransport> _pool;
 
-        public AIController(IPathfinder pathfinder, ControllableTransport controlledObject, IMovable targetObject)
+        public AIController(IPathfinder pathfinder, ControllableTransport controlledObject, IReadOnlyMovable targetObject)
         {
             _controlledObject = controlledObject;
 
@@ -66,7 +65,7 @@ namespace Code.AI
 
                 _input.Shoot = false;
                 Vector2 direction = (_targetObject.GetPosition() - _controlledObject.GetPosition()).normalized;
-                _input.Direction = direction;
+                _input.AimDirection = direction;
             }
             else
             {
@@ -77,7 +76,7 @@ namespace Code.AI
 
                 _input.Shoot = true;
                 Vector2 direction = (_targetObject.GetPosition() - _controlledObject.GetPosition()).normalized;
-                _input.Direction = direction;
+                _input.AimDirection = direction;
             }
             _controlledObject.Tick();
         }

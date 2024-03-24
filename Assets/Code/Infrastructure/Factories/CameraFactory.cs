@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Code.Infrastructure.Factories
 {
-    public class CameraFactory : IFactory<IMovable, CameraController>
+    public class CameraFactory : IFactory<IReadOnlyMovable, CameraController>
     {
         private readonly CameraConfig _config;
 
@@ -16,7 +16,7 @@ namespace Code.Infrastructure.Factories
             _config = config;
         }
 
-        public CameraController Create(IMovable trackedObject)
+        public CameraController Create(IReadOnlyMovable trackedObject)
         {
             if (_config == null)
                 throw new System.NullReferenceException();

@@ -3,7 +3,6 @@ using Code.Infrastructure.Factories;
 using Code.Infrastructure.ScriptableObjects;
 using Code.Level;
 using Code.Map;
-using Code.Transport.Car;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;

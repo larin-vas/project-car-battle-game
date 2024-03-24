@@ -12,11 +12,14 @@ namespace Code.Map
         private readonly MapModel _model;
         private readonly MapView _view;
 
-        private readonly MapGenerator _generator;
+        private readonly IMapGenerator _generator;
 
-        private readonly CollisionTrigger _collisionTrigger;
+        private readonly ICollisionTrigger _collisionTrigger;
 
-        public MapController(MapModel mapModel, MapView mapView, MapGenerator generator, CollisionTrigger collisionTrigger)
+        public MapController(
+            MapModel mapModel, MapView mapView,
+            IMapGenerator generator,
+            ICollisionTrigger collisionTrigger)
         {
             _model = mapModel;
             _view = mapView;
@@ -49,6 +52,11 @@ namespace Code.Map
         public void Generate()
         {
             _generator.Generate();
+        }
+
+        public float GetGenerationProgress()
+        {
+            return _generator.GenerationProgress;
         }
 
         public void Tick()

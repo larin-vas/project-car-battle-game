@@ -20,7 +20,7 @@ namespace Code.Level
         private readonly MapController _map;
 
         private readonly IFactory<CarConfig, CarController> _carFactory;
-        private readonly IFactory<IMovable, CameraController> _cameraFactory;
+        private readonly IFactory<IReadOnlyMovable, CameraController> _cameraFactory;
 
         private readonly CarConfig _playerCarConfig;
         private readonly CarConfig _enemyCarConfig;
@@ -31,7 +31,7 @@ namespace Code.Level
             IUIInput input,
             MapController map,
             IFactory<CarConfig, CarController> carFactory,
-            IFactory<IMovable, CameraController> cameraFactory,
+            IFactory<IReadOnlyMovable, CameraController> cameraFactory,
             [Inject(Id = "Player")] CarConfig playerCarConfig,
             [Inject(Id = "Enemy")] CarConfig enemyCarConfig,
             IPathfinder pathfinder)

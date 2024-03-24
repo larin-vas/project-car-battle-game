@@ -3,7 +3,6 @@ using UnityEngine;
 using Code.GameCamera;
 using Code.Map;
 using Code.Transport.Car;
-using Code.AI;
 
 namespace Code.Level.States
 {
@@ -50,6 +49,8 @@ namespace Code.Level.States
         { }
 
         public void Tick()
-        { }
+        {
+            Debug.Log(_map.GetGenerationProgress());
+        }
     }
 }

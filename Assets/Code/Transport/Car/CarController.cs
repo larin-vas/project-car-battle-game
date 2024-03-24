@@ -15,16 +15,17 @@ namespace Code.Transport.Car
         private readonly CarModel _carModel;
         private readonly ITransportView _carView;
 
-        private readonly WheelSystemController _suspension;
-        private readonly WeaponSystemController _weaponSystem;
+        private readonly IWheelSystem _suspension;
+        private readonly IWeaponSystem _weaponSystem;
 
-        private readonly CollisionTrigger _collisionTrigger;
+        private readonly ICollisionTrigger _collisionTrigger;
 
-        public CarController(IMovableInput input,
+        public CarController(
+            IMovableInput input,
             CarModel playerModel, ITransportView playerView,
-            WheelSystemController suspension,
-            WeaponSystemController weaponSystem,
-            CollisionTrigger collisionTrigger)
+            IWheelSystem suspension,
+            IWeaponSystem weaponSystem,
+            ICollisionTrigger collisionTrigger)
         {
             _input = input;
 
@@ -156,7 +157,7 @@ namespace Code.Transport.Car
             totalForce = Vector2.zero;
             totalTorque = 0f;
 
-            foreach (ForceModel force in _suspension.GetWheelsForces())
+            foreach (PhysicForce force in _suspension.GetWheelsForces())
             {
                 totalForce += force.Direction;
 

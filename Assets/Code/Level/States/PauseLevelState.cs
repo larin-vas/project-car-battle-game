@@ -22,7 +22,9 @@ namespace Code.Level.States
         }
 
         public void Exit()
-        { }
+        {
+            Debug.Log("UNPAUSE");
+        }
 
         public void Tick()
         {

@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Code.Wheel
 {
-    public class WheelSystemController : ITickable
+    public class WheelSystemController : IWheelSystem
     {
         private IMovableInput _input;
 
@@ -14,7 +14,10 @@ namespace Code.Wheel
 
         private readonly ICollection<WheelController> _wheels;
 
-        public WheelSystemController(IMovableInput input, ITransportModel carModel, ICollection<WheelController> wheels)
+        public WheelSystemController(
+            IMovableInput input,
+            ITransportModel carModel,
+            ICollection<WheelController> wheels)
         {
             _input = input;
             _transportModel = carModel;
@@ -53,41 +56,15 @@ namespace Code.Wheel
             }
         }
 
-        public IEnumerable<ForceModel> GetWheelsForces()
+        public IEnumerable<PhysicForce> GetWheelsForces()
         {
             foreach (WheelController wheel in _wheels)
-                yield return new ForceModel(wheel.GetPosition(), GetWheelForceDirection(wheel));
+                yield return new PhysicForce(wheel.GetPosition(), GetWheelForceDirection(wheel));
         }
 
         public void SetInput(IMovableInput input)
         {
             _input = input;
-        }
-
-        public void Tick()
-        {
-            foreach (WheelController wheel in _wheels)
-            {
-                wheel.Tick();
-            }
-        }
-
-        private float CalculateWheelSlidingCoefficient(WheelController wheel)
-        {
-            float baseDistance = (wheel.GetPosition() - CalculateCarCenter()).magnitude;
-            float currentDistance = (wheel.GetPosition() - _transportModel.CurrentMassCenter).magnitude;
-            float Coefficient = 1f / (1f + Mathf.Exp(-_transportModel.Mass * (currentDistance - baseDistance)));
-            return 0.05f + Coefficient * 0.795f;
-        }
-
-        private Vector2 CalculateCarCenter()
-        {
-            Vector2 carCenter = Vector2.zero;
-            foreach (WheelController wheel in _wheels)
-            {
-                carCenter += wheel.GetPosition();
-            }
-            return carCenter / _wheels.Count;
         }
 
         public Vector2 CalculateRotationCenter()
@@ -116,6 +93,32 @@ namespace Code.Wheel
                 }
             }
             return rotationCenter / wheelsCount;
+        }
+
+        public void Tick()
+        {
+            foreach (WheelController wheel in _wheels)
+            {
+                wheel.Tick();
+            }
+        }
+
+        private float CalculateWheelSlidingCoefficient(WheelController wheel)
+        {
+            float baseDistance = (wheel.GetPosition() - CalculateCarCenter()).magnitude;
+            float currentDistance = (wheel.GetPosition() - _transportModel.CurrentMassCenter).magnitude;
+            float Coefficient = 1f / (1f + Mathf.Exp(-_transportModel.Mass * (currentDistance - baseDistance)));
+            return 0.05f + Coefficient * 0.795f;
+        }
+
+        private Vector2 CalculateCarCenter()
+        {
+            Vector2 carCenter = Vector2.zero;
+            foreach (WheelController wheel in _wheels)
+            {
+                carCenter += wheel.GetPosition();
+            }
+            return carCenter / _wheels.Count;
         }
 
         private Vector2 GetWheelForceDirection(WheelController wheel)

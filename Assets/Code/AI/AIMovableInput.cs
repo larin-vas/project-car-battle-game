@@ -29,41 +29,41 @@ namespace Code.AI
             }
         }
 
-        public bool Handbrake
-        {
-            get => _handbrake;
-            set => _handbrake = value;
-        }
+        public bool Handbrake { get; set; }
 
-        public bool Brake
-        {
-            get => _brake;
-            set => _brake = value;
-        }
+        public bool Brake { get; set; }
 
-        public Vector2 Direction { get; set; }
+
+        public Vector2 AimDirection { get; set; }
 
         public bool Shoot { get; set; }
 
-        private float _movement;
-        private float _rotation;
-        private bool _handbrake;
-        private bool _brake;
 
-        public AIMovableInput() : this(0f, 0f, false, false)
+        private float _movement;
+
+        private float _rotation;
+
+        public AIMovableInput() : this(0f, 0f, false, false, Vector2.zero, false)
         { }
 
-        public AIMovableInput(float movement, float rotation, bool handbrake, bool brake)
+        public AIMovableInput(float movement, float rotation, bool handbrake, bool brake, Vector2 aimDirection, bool shoot)
         {
-            SetValues(movement, rotation, handbrake, brake);
+            SetMovableInput(movement, rotation, handbrake, brake);
+            SetAimingInput(aimDirection, shoot);
         }
 
-        public void SetValues(float movement, float rotation, bool handbrake, bool brake)
+        public void SetMovableInput(float movement, float rotation, bool handbrake, bool brake)
         {
             Movement = movement;
             Rotation = rotation;
             Handbrake = handbrake;
             Brake = brake;
+        }
+
+        public void SetAimingInput(Vector2 aimDirection, bool shoot)
+        {
+            AimDirection = aimDirection;
+            Shoot = shoot;
         }
     }
 }

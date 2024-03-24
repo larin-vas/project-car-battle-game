@@ -2,12 +2,13 @@ using Code.Combat.Projectile;
 using Code.Common.Interfaces;
 using Code.Infrastructure.Pools;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
 namespace Code.Combat.Gun
 {
-    public class GunController : IMovable, ITickable
+    public class GunController : IWeapon
     {
         private IAimingInput _input;
 
@@ -16,7 +17,8 @@ namespace Code.Combat.Gun
 
         private readonly IPool<ProjectileController> _projectilePool;
 
-        public GunController(IAimingInput aimingInput,
+        public GunController(
+            IAimingInput aimingInput,
             GunModel model, GunView view,
             IPool<ProjectileController> projectilePool)
         {
@@ -58,13 +60,11 @@ namespace Code.Combat.Gun
             SetAbsoluteRotation(rotation * _model.LocalRotation);
         }
 
-        public void SetInput(IInput input)
+        public void SetInput(IAimingInput input)
         {
             _input = input;
         }
 
-
-        private List<ProjectileController> _projectiles = new List<ProjectileController>();
         public void Tick()
         {
             if (_model.ReloadTimeRemaining > 0f)
@@ -75,12 +75,8 @@ namespace Code.Combat.Gun
                 _model.ReloadTimeRemaining = newReloadTimeRemaining;
             }
 
-
-            Vector2 direction = Vector2.zero;
-            if (_input.Direction.magnitude > 2f)
-                direction = ScreenCoordsToDirection(_input.Direction);
-            else
-                direction = _input.Direction;
+            Vector2 direction = (_input.AimDirection.magnitude > 2f) ?
+                ScreenCoordsToDirection(_input.AimDirection) : _input.AimDirection;
 
             Quaternion newRotation = Quaternion.FromToRotation(_model.Transformation.Rotation.Value * Quaternion.Inverse(_model.LocalRotation) * Vector3.up, direction);
 
@@ -94,26 +90,19 @@ namespace Code.Combat.Gun
                 projectile.SetRotation(GetRotation());
                 projectile.SetDirection(GetRotation() * Vector2.up);
 
-                _projectiles.Add(projectile);
-
                 _model.ReloadTimeRemaining = _model.ReloadTime;
             }
 
-            List<ProjectileController> projectiles = new List<ProjectileController>();
+            List<ProjectileController> activeProjectiles = _projectilePool.GetAllActiveObjects().ToList();
 
-            foreach (var projectile in _projectiles)
+            foreach (var projectile in activeProjectiles)
             {
                 projectile.Tick();
 
                 if (projectile.HasHit)
                 {
                     _projectilePool.ReturnToPool(projectile);
-                    projectiles.Add(projectile);
                 }
-            }
-            foreach (var projectile in projectiles)
-            {
-                _projectiles.Remove(projectile);
             }
         }
 
@@ -131,7 +120,8 @@ namespace Code.Combat.Gun
         {
             _model.LocalRotation = localRotation;
         }
-
+        
+        // WIP
         private Vector2 ScreenCoordsToDirection(Vector2 screenCoords)
         {
             Vector2 direction = Camera.main.ScreenToWorldPoint(screenCoords);

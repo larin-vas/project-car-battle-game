@@ -1,22 +1,22 @@
-using Code.Combat.Gun;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace Code.Combat
 {
-    public class WeaponSystemController : ITickable
+    public class WeaponSystemController : IWeaponSystem
     {
-        private readonly ICollection<GunController> _guns;
+        private readonly ICollection<IWeapon> _guns;
 
-        public WeaponSystemController(ICollection<GunController> guns)
+        public WeaponSystemController(ICollection<IWeapon> guns)
         {
             _guns = guns;
         }
 
         public void Enable()
         {
-            foreach (GunController gun in _guns)
+            foreach (IWeapon gun in _guns)
             {
                 gun.Enable();
             }
@@ -24,7 +24,7 @@ namespace Code.Combat
 
         public void Disable()
         {
-            foreach (GunController gun in _guns)
+            foreach (IWeapon gun in _guns)
             {
                 gun.Disable();
             }
@@ -32,7 +32,7 @@ namespace Code.Combat
 
         public void SetPosition(Vector2 position)
         {
-            foreach (GunController gun in _guns)
+            foreach (IWeapon gun in _guns)
             {
                 gun.SetPosition(position);
             }
@@ -40,15 +40,15 @@ namespace Code.Combat
 
         public void SetRotation(Quaternion rotation)
         {
-            foreach (GunController gun in _guns)
+            foreach (IWeapon gun in _guns)
             {
                 gun.SetRotation(rotation);
             }
         }
 
-        public void SetInput(IInput input)
+        public void SetInput(IAimingInput input)
         {
-            foreach (GunController gun in _guns)
+            foreach (IWeapon gun in _guns)
             {
                 gun.SetInput(input);
             }
@@ -56,7 +56,7 @@ namespace Code.Combat
 
         public void Tick()
         {
-            foreach (GunController gun in _guns)
+            foreach (IWeapon gun in _guns)
             {
                 gun.Tick();
             }

@@ -20,7 +20,11 @@ namespace Code.Map
         public int BorderWidth { get; }
 
         public MapModel(
-            int seed, int width, int height, float mapScale, float hillsRatio, int borderWidth)
+            int seed,
+            int width, int height,
+            float mapScale,
+            float hillsRatio,
+            int borderWidth)
         {
             ValidateArguments(width, height, mapScale, hillsRatio, borderWidth);
 
@@ -52,7 +56,9 @@ namespace Code.Map
             if (hillsRatio < 0 || hillsRatio > 1)
                 throw new ArgumentOutOfRangeException(nameof(hillsRatio));
 
-            if (borderWidth <= 0)
+            if (borderWidth <= 0 || 
+                borderWidth * 2 >= width || 
+                borderWidth * 2 >= height)
                 throw new ArgumentOutOfRangeException(nameof(borderWidth));
         }
 

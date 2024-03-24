@@ -17,10 +17,15 @@ namespace Code.Map.Tile
 
         public float FrictionRate { get; }
 
-        public TileModel(TileBase objectTile, TileBase groundTile, TileType type, float rate) : this(objectTile, groundTile, Vector2Int.zero, type, rate)
+        public TileModel(
+            TileBase objectTile, TileBase groundTile, 
+            TileType type, float rate) : 
+            this(objectTile, groundTile, Vector2Int.zero, type, rate)
         { }
 
-        public TileModel(TileBase objectTile, TileBase groundTile, Vector2Int position, TileType type, float rate)
+        public TileModel(
+            TileBase objectTile, TileBase groundTile, 
+            Vector2Int position, TileType type, float rate)
         {
             ObjectTile = objectTile;
             GroundTile = groundTile;

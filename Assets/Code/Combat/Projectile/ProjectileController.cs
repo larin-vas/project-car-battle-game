@@ -15,9 +15,11 @@ namespace Code.Combat.Projectile
         private readonly ProjectileModel _model;
         private readonly ProjectileView _view;
 
-        private readonly CollisionTrigger _collisionTrigger;
+        private readonly ICollisionTrigger _collisionTrigger;
 
-        public ProjectileController(ProjectileModel model, ProjectileView view, CollisionTrigger collisionTrigger)
+        public ProjectileController(
+            ProjectileModel model, ProjectileView view,
+            ICollisionTrigger collisionTrigger)
         {
             _model = model;
             _view = view;

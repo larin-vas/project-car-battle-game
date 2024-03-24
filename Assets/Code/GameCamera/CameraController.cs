@@ -7,12 +7,13 @@ namespace Code.GameCamera
 {
     public class CameraController : IMovable, ITickable
     {
-        private IMovable _trackedObject;
+        private IReadOnlyMovable _trackedObject;
 
         private readonly CameraModel _cameraModel;
         private readonly CameraView _cameraView;
 
-        public CameraController(IMovable trackedObject,
+        public CameraController(
+            IReadOnlyMovable trackedObject,
             CameraModel cameraModel, CameraView cameraView)
         {
             _trackedObject = trackedObject;
@@ -50,7 +51,7 @@ namespace Code.GameCamera
             _cameraModel.Transformation.Rotation.Value = rotation;
         }
 
-        public void UpdateTrackedObject(IMovable trackedObject)
+        public void UpdateTrackedObject(IReadOnlyMovable trackedObject)
         {
             _trackedObject = trackedObject;
         }

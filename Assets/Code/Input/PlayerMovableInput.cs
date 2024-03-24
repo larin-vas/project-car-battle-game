@@ -13,11 +13,13 @@ public class PlayerMovableInput : IInput, IUIInput
     public bool Brake => _breakAction.IsPressed();
 
     // Weapon Controls
-    public Vector2 Direction => _aimAction.ReadValue<Vector2>();
+    public Vector2 AimDirection => _aimAction.ReadValue<Vector2>();
 
     public bool Shoot => _shootAction.IsPressed();
 
+    // UI Controls
     public bool PauseButtonPressed => _pauseAction.WasPressedThisFrame();
+
 
     private readonly PlayerInput _playerInput;
 
