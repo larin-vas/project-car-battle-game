@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 268968e37d2b6d845b7e7419c22bf995, type: 3}
+  m_Name: Map
+  m_EditorClassIdentifier: 
+  _mapView: {fileID: 5378177008327043644, guid: 3875beac56ce5fb459a788cebd0fb638, type: 3}
+  _mapBootstrap: 2
+  _useConfigSeed: 0
+  _seed: 0
+  _width: 300
+  _height: 300
+  _mapScale: 30
+  _borderWidth: 2
+  _drag: 5000
+  _hillsRatio: 0.4
+  _groundTileConfig:
+    _objectTile: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
+    _groundTile: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
+    _type: 0
+    _elasticityRate: 0
+    _frictionRate: 0
+  _hillTileConfig:
+    _objectTile: {fileID: 11400000, guid: 37ca472e56cebf142a2600eed0e82424, type: 2}
+    _groundTile: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
+    _type: 1
+    _elasticityRate: 0
+    _frictionRate: 0
