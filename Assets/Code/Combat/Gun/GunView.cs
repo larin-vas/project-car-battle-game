@@ -1,6 +1,3 @@
-using Code.Transport.Car;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Code.Combat.Gun
@@ -9,7 +6,7 @@ namespace Code.Combat.Gun
     public class GunView : MonoBehaviour
     {
         [field: SerializeField]
-        public PhysicObjectUpdater Transformable { get; private set; }
+        public PhysicObjectUpdater PhysicObjectUpdater { get; private set; }
 
         [field: SerializeField]
         public ObjectActivator Activator { get; private set; }

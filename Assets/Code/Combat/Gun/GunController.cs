@@ -1,10 +1,8 @@
 using Code.Combat.Projectile;
-using Code.Common.Interfaces;
 using Code.Infrastructure.Pools;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Zenject;
 
 namespace Code.Combat.Gun
 {
@@ -52,7 +50,10 @@ namespace Code.Combat.Gun
 
         public void SetPosition(Vector2 position)
         {
-            SetAbsolutePosition((Vector3)position + _model.Transformation.Rotation.Value * Quaternion.Inverse(_model.LocalRotation) * _model.LocalPosition);
+            Vector2 absolutePosition =
+                (Vector3)position + GetRotationWithoutLocal() * _model.LocalPosition;
+
+            SetAbsolutePosition(absolutePosition);
         }
 
         public void SetRotation(Quaternion rotation)
@@ -68,31 +69,35 @@ namespace Code.Combat.Gun
         public void Tick()
         {
             if (_model.ReloadTimeRemaining > 0f)
+                UpdateReloadTimeRemaining();
+
+            UpdateRotation();
+
+            if (_input.Shoot && CanShoot())
             {
-                float newReloadTimeRemaining = _model.ReloadTimeRemaining - Time.deltaTime;
-                newReloadTimeRemaining = Mathf.Clamp(newReloadTimeRemaining, 0f, _model.ReloadTime);
-
-                _model.ReloadTimeRemaining = newReloadTimeRemaining;
-            }
-
-            Vector2 direction = (_input.AimDirection.magnitude > 2f) ?
-                ScreenCoordsToDirection(_input.AimDirection) : _input.AimDirection;
-
-            Quaternion newRotation = Quaternion.FromToRotation(_model.Transformation.Rotation.Value * Quaternion.Inverse(_model.LocalRotation) * Vector3.up, direction);
-
-            SetLocalRotation(Quaternion.Lerp(_model.LocalRotation, newRotation, _model.RotationSpeed * Time.deltaTime));
-
-            if (_input.Shoot && _model.ReloadTimeRemaining == 0f)
-            {
-                Debug.Log("POW!");
-                ProjectileController projectile = _projectilePool.GetFromPool();
-                projectile.SetPosition(GetPosition());
-                projectile.SetRotation(GetRotation());
-                projectile.SetDirection(GetRotation() * Vector2.up);
+                SpawnProjectile();
 
                 _model.ReloadTimeRemaining = _model.ReloadTime;
             }
 
+            UpdateActiveProjectiles();
+        }
+
+        private void UpdateRotation()
+        {
+            Vector2 aimDirection = _input.AimTargetPoint - GetPosition();
+
+            Quaternion finalAimRotation =
+                Quaternion.FromToRotation(GetRotationWithoutLocal() * Vector3.up, aimDirection);
+
+            Quaternion newLocalRotation =
+                Quaternion.Lerp(_model.LocalRotation, finalAimRotation, _model.RotationSpeed * Time.deltaTime);
+
+            SetLocalRotation(newLocalRotation);
+        }
+
+        private void UpdateActiveProjectiles()
+        {
             List<ProjectileController> activeProjectiles = _projectilePool.GetAllActiveObjects().ToList();
 
             foreach (var projectile in activeProjectiles)
@@ -100,9 +105,7 @@ namespace Code.Combat.Gun
                 projectile.Tick();
 
                 if (projectile.HasHit)
-                {
                     _projectilePool.ReturnToPool(projectile);
-                }
             }
         }
 
@@ -120,14 +123,31 @@ namespace Code.Combat.Gun
         {
             _model.LocalRotation = localRotation;
         }
-        
-        // WIP
-        private Vector2 ScreenCoordsToDirection(Vector2 screenCoords)
-        {
-            Vector2 direction = Camera.main.ScreenToWorldPoint(screenCoords);
-            direction -= GetPosition();
 
-            return direction;
+        private bool CanShoot()
+        {
+            return Mathf.Approximately(_model.ReloadTimeRemaining, 0f);
+        }
+
+        private void UpdateReloadTimeRemaining()
+        {
+            float newReloadTimeRemaining = _model.ReloadTimeRemaining - Time.deltaTime;
+            newReloadTimeRemaining = Mathf.Clamp(newReloadTimeRemaining, 0f, _model.ReloadTime);
+
+            _model.ReloadTimeRemaining = newReloadTimeRemaining;
+        }
+
+        private void SpawnProjectile()
+        {
+            ProjectileController projectile = _projectilePool.GetFromPool();
+            projectile.SetPosition(GetPosition());
+            projectile.SetRotation(GetRotation());
+            projectile.SetDirection(GetRotation() * Vector2.up);
+        }
+
+        private Quaternion GetRotationWithoutLocal()
+        {
+            return _model.Transformation.Rotation.Value * Quaternion.Inverse(_model.LocalRotation);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Code.Infrastructure.Factories
 
             GunModel model = new GunModel(transformation, config.LocalPosition, config.RotationSpeed, config.ReloadTime);
 
-            view.Transformable.Construct(transformation);
+            view.PhysicObjectUpdater.Construct(transformation);
 
             ProjectileFactory projectileFactory = new ProjectileFactory(parentCarView.Collider);
 
