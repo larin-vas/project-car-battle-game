@@ -30,12 +30,17 @@ public class GameSceneInstaller : MonoInstaller
     [field: SerializeField]
     public PlayerInput PlayerInput { get; set; }
 
+    [SerializeField]
+    public PlayerInputConfig InputData;
+
     [field: SerializeField]
     public Camera MainCamera { get; set; }
 
     public override void InstallBindings()
     {
         Container.Bind<PlayerInput>().FromInstance(PlayerInput).AsSingle();
+
+        Container.BindInterfacesAndSelfTo<PlayerInputConfig>().FromInstance(InputData).AsSingle();
 
         Container.BindInterfacesAndSelfTo<MapConfig>().FromInstance(MapData).AsSingle();
 
@@ -45,7 +50,7 @@ public class GameSceneInstaller : MonoInstaller
 
         Container.Bind<CarConfig>().WithId("Enemy").FromInstance(EnemyCarData);
 
-        Container.BindInterfacesAndSelfTo<PlayerMovableInput>().AsSingle();
+        Container.BindInterfacesAndSelfTo<MainPlayerInput>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<CameraFactory>().AsSingle();
 

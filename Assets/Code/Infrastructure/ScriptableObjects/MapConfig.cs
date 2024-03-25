@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Code.Infrastructure.ScriptableObjects
 {
-
     [CreateAssetMenu(fileName = "New Map", menuName = "Map")]
     public class MapConfig : ScriptableObject
     {

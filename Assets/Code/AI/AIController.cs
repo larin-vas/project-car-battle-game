@@ -64,8 +64,6 @@ namespace Code.AI
                 _input.Handbrake = false;
 
                 _input.Shoot = false;
-                Vector2 direction = (_targetObject.GetPosition() - _controlledObject.GetPosition()).normalized;
-                _input.AimDirection = direction;
             }
             else
             {
@@ -75,9 +73,9 @@ namespace Code.AI
                 _input.Handbrake = true;
 
                 _input.Shoot = true;
-                Vector2 direction = (_targetObject.GetPosition() - _controlledObject.GetPosition()).normalized;
-                _input.AimDirection = direction;
             }
+            _input.AimTargetPoint = _targetObject.GetPosition();
+
             _controlledObject.Tick();
         }
     }

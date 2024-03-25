@@ -250,6 +250,7 @@ MonoBehaviour:
   PlayerPosition: {x: 50, y: 50}
   AiPosition: {x: 30, y: 30}
   <PlayerInput>k__BackingField: {fileID: 1727901086}
+  InputData: {fileID: 11400000, guid: 9efad80187cf4ef479fe44d5e2bc49ed, type: 2}
   <MainCamera>k__BackingField: {fileID: 0}
 --- !u!114 &1961280403
 MonoBehaviour:

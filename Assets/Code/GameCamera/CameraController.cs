@@ -1,54 +1,59 @@
 using Code.Common.Interfaces;
-using System;
 using UnityEngine;
 using Zenject;
 
 namespace Code.GameCamera
 {
-    public class CameraController : IMovable, ITickable
+    public class CameraController : IMovable, IActivatable, ITickable
     {
         private IReadOnlyMovable _trackedObject;
 
-        private readonly CameraModel _cameraModel;
-        private readonly CameraView _cameraView;
+        private readonly CameraModel _model;
+        private readonly CameraView _view;
 
         public CameraController(
             IReadOnlyMovable trackedObject,
-            CameraModel cameraModel, CameraView cameraView)
+            CameraModel model, CameraView view)
         {
             _trackedObject = trackedObject;
-            _cameraModel = cameraModel;
-            _cameraView = cameraView;
+
+            _model = model;
+            _view = view;
         }
 
         public void Enable()
         {
-            _cameraView.Activator.Enable();
+            _view.Activator.Enable();
         }
 
         public void Disable()
         {
-            _cameraView.Activator.Disable();
+            _view.Activator.Disable();
         }
 
         public Vector2 GetPosition()
         {
-            return _cameraModel.Transformation.Position.Value;
+            return _model.Transformation.Position.Value;
         }
 
         public Quaternion GetRotation()
         {
-            return _cameraModel.Transformation.Rotation.Value;
+            return _model.Transformation.Rotation.Value;
         }
 
         public void SetPosition(Vector2 position)
         {
-            _cameraModel.Transformation.Position.Value = position;
+            _model.Transformation.Position.Value = position;
         }
 
         public void SetRotation(Quaternion rotation)
         {
-            _cameraModel.Transformation.Rotation.Value = rotation;
+            _model.Transformation.Rotation.Value = rotation;
+        }
+
+        public Camera GetCamera()
+        {
+            return _view.Camera;
         }
 
         public void UpdateTrackedObject(IReadOnlyMovable trackedObject)

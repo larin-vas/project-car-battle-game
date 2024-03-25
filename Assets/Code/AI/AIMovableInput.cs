@@ -34,7 +34,7 @@ namespace Code.AI
         public bool Brake { get; set; }
 
 
-        public Vector2 AimDirection { get; set; }
+        public Vector2 AimTargetPoint { get; set; }
 
         public bool Shoot { get; set; }
 
@@ -62,7 +62,7 @@ namespace Code.AI
 
         public void SetAimingInput(Vector2 aimDirection, bool shoot)
         {
-            AimDirection = aimDirection;
+            AimTargetPoint = aimDirection;
             Shoot = shoot;
         }
     }
