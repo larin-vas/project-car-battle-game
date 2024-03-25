@@ -65,5 +65,10 @@ namespace Code.AI
             AimTargetPoint = aimDirection;
             Shoot = shoot;
         }
+
+        public void StopMovement()
+        {
+            SetMovableInput(0f, 0f, true, true);
+        }
     }
 }

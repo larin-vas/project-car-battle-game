@@ -59,7 +59,7 @@ namespace Code.Level
 
             CarController enemyCar = _carFactory.Create(_enemyCarConfig);
 
-            AIController ai = new AIController(_pathfinder, enemyCar, playerCar);
+            AIMovementController ai = new AIMovementController(_pathfinder, enemyCar, playerCar);
 
             InitializeStates(playerCar, enemyCar, ai, camera);
 
@@ -71,7 +71,7 @@ namespace Code.Level
             _stateMachine.Tick();
         }
 
-        public void InitializeStates(CarController playerCar, CarController enemyCar, AIController ai, CameraController camera)
+        public void InitializeStates(CarController playerCar, CarController enemyCar, AIMovementController ai, CameraController camera)
         {
             InitializeLevelState initializeLevelState = new InitializeLevelState(_stateMachine, _map, playerCar, enemyCar, camera);
 

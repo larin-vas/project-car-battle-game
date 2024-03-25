@@ -19,14 +19,14 @@ namespace Code.Level.States
 
         private CameraController _camera;
 
-        private readonly AIController _ai;
+        private readonly AIMovementController _ai;
 
         public PlayingLevelState(
             StateMachine stateMachine,
             IUIInput input,
             MapController map,
             CarController playerCar,
-            AIController ai,
+            AIMovementController ai,
             CameraController camera)
         {
             _stateMachine = stateMachine;
@@ -52,8 +52,6 @@ namespace Code.Level.States
 
             _playerCar.Tick();
             _camera.Tick();
-
-            _ai.Tick();
         }
     }
 }
