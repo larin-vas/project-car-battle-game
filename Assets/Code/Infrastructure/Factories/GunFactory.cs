@@ -13,12 +13,9 @@ namespace Code.Infrastructure.Factories
     {
         private readonly IAimingInput _input;
 
-        //private readonly IFactory<ProjectileConfig, ProjectileController> _projectileFactory;
-
         public GunFactory(IAimingInput input)
         {
             _input = input;
-            //_projectileFactory = projectileFactory;
         }
 
         public GunController Create(CarView parentCarView, GunConfig config)
