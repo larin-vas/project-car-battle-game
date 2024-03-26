@@ -60,6 +60,8 @@ public class GameSceneInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<CarFactory>().AsSingle();
 
+        Container.BindInterfacesAndSelfTo<AIControllerFactory>().AsSingle();
+
         Container.BindInterfacesAndSelfTo<TileModelFactory>().AsSingle();
 
         Container.Bind<MapController>().FromFactory<MapFactory>().AsSingle();

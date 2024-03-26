@@ -21,34 +21,29 @@ namespace Code.Level
 
         private readonly IFactory<CarConfig, CarController> _carFactory;
         private readonly IFactory<IReadOnlyMovable, CameraController> _cameraFactory;
+        private readonly IFactory<IReadOnlyMovable, int, AIController> _aiControllerFactory;
 
         private readonly CarConfig _playerCarConfig;
-        private readonly CarConfig _enemyCarConfig;
-
-        private readonly IPathfinder _pathfinder;
 
         public LevelController(
             IUIInput input,
             MapController map,
             IFactory<CarConfig, CarController> carFactory,
             IFactory<IReadOnlyMovable, CameraController> cameraFactory,
-            [Inject(Id = "Player")] CarConfig playerCarConfig,
-            [Inject(Id = "Enemy")] CarConfig enemyCarConfig,
-            IPathfinder pathfinder)
+            IFactory<IReadOnlyMovable, int, AIController> aiControllerFactory,
+            [Inject(Id = "Player")] CarConfig playerCarConfig)
         {
             _stateMachine = new StateMachine();
 
             _input = input;
 
             _map = map;
-            
+
             _carFactory = carFactory;
             _cameraFactory = cameraFactory;
+            _aiControllerFactory = aiControllerFactory;
 
             _playerCarConfig = playerCarConfig;
-            _enemyCarConfig = enemyCarConfig;
-
-            _pathfinder = pathfinder;
         }
 
         public void Start()
@@ -57,11 +52,9 @@ namespace Code.Level
 
             CameraController camera = _cameraFactory.Create(playerCar);
 
-            CarController enemyCar = _carFactory.Create(_enemyCarConfig);
+            AIController aiController = _aiControllerFactory.Create(playerCar, 3);
 
-            AIMovementController ai = new AIMovementController(_pathfinder, enemyCar, playerCar);
-
-            InitializeStates(playerCar, enemyCar, ai, camera);
+            InitializeStates(playerCar, aiController, camera);
 
             _stateMachine.EnterIn<InitializeLevelState>();
         }
@@ -71,11 +64,11 @@ namespace Code.Level
             _stateMachine.Tick();
         }
 
-        public void InitializeStates(CarController playerCar, CarController enemyCar, AIMovementController ai, CameraController camera)
+        public void InitializeStates(CarController playerCar, AIController aiController, CameraController camera)
         {
-            InitializeLevelState initializeLevelState = new InitializeLevelState(_stateMachine, _map, playerCar, enemyCar, camera);
+            InitializeLevelState initializeLevelState = new InitializeLevelState(_stateMachine, _map, playerCar, aiController, camera);
 
-            PlayingLevelState playingLevelState = new PlayingLevelState(_stateMachine, _input, _map, playerCar, ai, camera);
+            PlayingLevelState playingLevelState = new PlayingLevelState(_stateMachine, _input, _map, playerCar, aiController, camera);
 
             PauseLevelState pauseLevelState = new PauseLevelState(_stateMachine, _input);
 

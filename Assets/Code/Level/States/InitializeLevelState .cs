@@ -3,6 +3,7 @@ using UnityEngine;
 using Code.GameCamera;
 using Code.Map;
 using Code.Transport.Car;
+using Code.AI;
 
 namespace Code.Level.States
 {
@@ -14,7 +15,7 @@ namespace Code.Level.States
 
         private readonly CarController _playerCar;
 
-        private readonly CarController _enemyCar;
+        private readonly AIController _aiController;
 
         private CameraController _camera;
 
@@ -22,13 +23,13 @@ namespace Code.Level.States
             StateMachine stateMachine,
             MapController map,
             CarController playerCar,
-            CarController enemyCar,
+            AIController aiController,
             CameraController camera)
         {
             _stateMachine = stateMachine;
             _map = map;
             _playerCar = playerCar;
-            _enemyCar = enemyCar;
+            _aiController = aiController;
             _camera = camera;
         }
 
@@ -40,7 +41,7 @@ namespace Code.Level.States
 
             _camera.SetPosition(_playerCar.GetPosition());
 
-            _enemyCar.SetPosition(new Vector2(30, 30));
+            _aiController.Initialize();
 
             _stateMachine.EnterIn<PlayingLevelState>();
         }

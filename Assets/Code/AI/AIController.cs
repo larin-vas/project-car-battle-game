@@ -1,5 +1,6 @@
 using Code.Car;
 using Code.Infrastructure.Pools;
+using UnityEngine;
 using Zenject;
 
 namespace Code.AI
@@ -26,13 +27,15 @@ namespace Code.AI
         {
             for (int i = 0; i < _enemyCount; i++)
             {
-                _pool.GetFromPool();
+                ControllableTransport transport = _pool.GetFromPool();
+
+                transport.SetPosition(new Vector2(Random.Range(10f, 100f), Random.Range(10f, 100f)));
             }
         }
 
         public void Tick()
         {
-            foreach(ControllableTransport transport in _pool.GetAllActiveObjects())
+            foreach (ControllableTransport transport in _pool.GetAllActiveObjects())
             {
                 _movementController.UpdateObjectInput(transport);
                 transport.Tick();

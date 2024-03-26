@@ -16,9 +16,9 @@ MonoBehaviour:
   _mapBootstrap: 2
   _useConfigSeed: 0
   _seed: 0
-  _width: 300
-  _height: 300
-  _mapScale: 30
+  _width: 100
+  _height: 100
+  _mapScale: 10
   _borderWidth: 2
   _drag: 5000
   _hillsRatio: 0.4

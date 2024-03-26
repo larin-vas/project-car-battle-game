@@ -36,6 +36,9 @@ namespace Code.AI.Pathfinding
 
         public IReadOnlyList<Vector2Int> FindPath(Vector2Int start, Vector2Int target)
         {
+            if (_map[target.x, target.y].Value.Type != TileType.Ground)
+                return null;
+
             List<Vector2Int> path = new List<Vector2Int>();
 
             HashSet<Vector2Int> closedSet = new HashSet<Vector2Int>();

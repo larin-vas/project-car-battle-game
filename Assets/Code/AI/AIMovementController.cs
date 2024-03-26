@@ -3,8 +3,6 @@ using Code.Car;
 using Code.Common.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Zenject;
 
 namespace Code.AI
 {
@@ -16,10 +14,16 @@ namespace Code.AI
 
         private readonly AIMovableInput _input;
 
-        public AIMovementController(IPathfinder pathfinder, IReadOnlyMovable targetObject) : this(pathfinder, targetObject, new AIMovableInput())
+        public AIMovementController(
+            IPathfinder pathfinder,
+            IReadOnlyMovable targetObject) :
+            this(pathfinder, targetObject, new AIMovableInput())
         { }
 
-        public AIMovementController(IPathfinder pathfinder, IReadOnlyMovable targetObject, AIMovableInput movableInput)
+        public AIMovementController(
+            IPathfinder pathfinder,
+            IReadOnlyMovable targetObject,
+            AIMovableInput movableInput)
         {
             _pathfinder = pathfinder;
 
@@ -51,14 +55,14 @@ namespace Code.AI
 
             IReadOnlyList<Vector2Int> path = _pathfinder.FindPath(controlledObjectPosition, targetPosition);
 
-            if (path != null && path.Count > 0)
+            if (path != null && path.Count > 2)
             {
-                Vector2 moveDirection = (path[1] - controlledObject.GetPosition()).normalized;
+                Vector2 moveDirection = (path[3] - controlledObject.GetPosition()).normalized;
 
-                // ¬ычисл€ем угол между текущим поворотом и целевым направлением
+                // Calculate the angle between the current turn and the target direction
                 float angleDifference = CalculateAngleDifference(controlledObject, moveDirection);
 
-                _input.Rotation = CalculateRotation(angleDifference, angleSign);
+                _input.Rotation = CalculateRotation(angleDifference);
 
                 _input.Movement = CalculateMovement(angleDifference);
 
@@ -81,16 +85,16 @@ namespace Code.AI
         {
             Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, moveDirection);
 
-            // ¬ычисл€ем знак угла
             Vector3 cross = Vector3.Cross(Vector3.forward, moveDirection);
             float angleSign = Mathf.Sign(Vector3.Dot(cross, controlledObject.GetRotation() * Vector2.up));
 
             return angleSign * Quaternion.Angle(controlledObject.GetRotation(), targetRotation);
         }
 
-        private float CalculateRotation(float angleDifference, float sign)
+        private float CalculateRotation(float angleDifference)
         {
-            return (angleDifference < 90f) ? sign : -sign;
+            float angleSign = Mathf.Sign(angleDifference);
+            return (Mathf.Abs(angleDifference) < 90f) ? angleSign : -angleSign;
         }
 
         private float CalculateMovement(float angleDifference)

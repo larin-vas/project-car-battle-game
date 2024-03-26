@@ -15,8 +15,8 @@ MonoBehaviour:
   _carView: {fileID: 4107235813603685845, guid: 22914b32740c5a04db743dfdafb0177c, type: 3}
   _collisionDamage: 1
   _maxHealthPoints: 200
-  _maxAcceleration: 20
-  _accelerationRate: 5
+  _maxAcceleration: 1
+  _accelerationRate: 0.2
   _massCenterPosition: {x: 0, y: 0.1}
   _mass: 10
   _whees:
