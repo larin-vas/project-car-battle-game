@@ -15,7 +15,7 @@ namespace Code.Level.States
 
         private readonly CarController _playerCar;
 
-        private readonly AIController _aiController;
+        private readonly EnemyGroupController _aiController;
 
         private CameraController _camera;
 
@@ -23,7 +23,7 @@ namespace Code.Level.States
             StateMachine stateMachine,
             MapController map,
             CarController playerCar,
-            AIController aiController,
+            EnemyGroupController aiController,
             CameraController camera)
         {
             _stateMachine = stateMachine;

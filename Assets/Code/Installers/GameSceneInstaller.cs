@@ -9,32 +9,26 @@ using Zenject;
 
 public class GameSceneInstaller : MonoInstaller
 {
-    [SerializeField]
-    public CarConfig CarData;
-
-    [SerializeField]
-    public CarConfig EnemyCarData;
-
-    [SerializeField]
-    public MapConfig MapData;
-
-    [SerializeField]
-    public CameraConfig CameraData;
-
-    [SerializeField]
-    public Vector2 PlayerPosition;
-
-    [SerializeField]
-    public Vector2 AiPosition;
+    [field: SerializeField]
+    public CarConfig PlayerCarData { get; private set; }
 
     [field: SerializeField]
-    public PlayerInput PlayerInput { get; set; }
-
-    [SerializeField]
-    public PlayerInputConfig InputData;
+    public CarConfig EnemyCarData { get; private set; }
 
     [field: SerializeField]
-    public Camera MainCamera { get; set; }
+    public MapConfig MapData { get; private set; }
+
+    [field: SerializeField]
+    public EnemyGroupConfig EnemyGroupData { get; private set; }
+
+    [field: SerializeField]
+    public CameraConfig CameraData { get; private set; }
+
+    [field: SerializeField]
+    public PlayerInput PlayerInput { get; private set; }
+
+    [field: SerializeField]
+    public PlayerInputConfig InputData { get; private set; }
 
     public override void InstallBindings()
     {
@@ -46,7 +40,9 @@ public class GameSceneInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<CameraConfig>().FromInstance(CameraData).AsSingle();
 
-        Container.Bind<CarConfig>().WithId("Player").FromInstance(CarData);
+        Container.BindInterfacesAndSelfTo<EnemyGroupConfig>().FromInstance(EnemyGroupData).AsSingle();
+
+        Container.Bind<CarConfig>().WithId("Player").FromInstance(PlayerCarData);
 
         Container.Bind<CarConfig>().WithId("Enemy").FromInstance(EnemyCarData);
 
@@ -60,7 +56,7 @@ public class GameSceneInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<CarFactory>().AsSingle();
 
-        Container.BindInterfacesAndSelfTo<AIControllerFactory>().AsSingle();
+        Container.BindInterfacesAndSelfTo<EnemyGroupFactory>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<TileModelFactory>().AsSingle();
 

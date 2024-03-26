@@ -19,14 +19,14 @@ namespace Code.Level.States
 
         private readonly CameraController _camera;
 
-        private readonly AIController _ai;
+        private readonly EnemyGroupController _ai;
 
         public PlayingLevelState(
             StateMachine stateMachine,
             IUIInput input,
             MapController map,
             CarController playerCar,
-            AIController ai,
+            EnemyGroupController ai,
             CameraController camera)
         {
             _stateMachine = stateMachine;

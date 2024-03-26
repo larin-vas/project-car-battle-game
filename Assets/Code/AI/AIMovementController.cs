@@ -8,6 +8,8 @@ namespace Code.AI
 {
     public class AIMovementController
     {
+        private readonly EnemyGroupModel _model;
+
         private readonly IPathfinder _pathfinder;
 
         private readonly IReadOnlyMovable _targetObject;
@@ -15,16 +17,20 @@ namespace Code.AI
         private readonly AIMovableInput _input;
 
         public AIMovementController(
+            EnemyGroupModel model,
             IPathfinder pathfinder,
             IReadOnlyMovable targetObject) :
-            this(pathfinder, targetObject, new AIMovableInput())
+            this(model, pathfinder, targetObject, new AIMovableInput())
         { }
 
         public AIMovementController(
+            EnemyGroupModel model,
             IPathfinder pathfinder,
             IReadOnlyMovable targetObject,
             AIMovableInput movableInput)
         {
+            _model = model;
+
             _pathfinder = pathfinder;
 
             _targetObject = targetObject;
@@ -55,9 +61,9 @@ namespace Code.AI
 
             IReadOnlyList<Vector2Int> path = _pathfinder.FindPath(controlledObjectPosition, targetPosition);
 
-            if (path != null && path.Count > 2)
+            if (path != null && path.Count >= _model.PathSegmentIndex)
             {
-                Vector2 moveDirection = (path[3] - controlledObject.GetPosition()).normalized;
+                Vector2 moveDirection = (path[_model.PathSegmentIndex] - controlledObject.GetPosition()).normalized;
 
                 // Calculate the angle between the current turn and the target direction
                 float angleDifference = CalculateAngleDifference(controlledObject, moveDirection);
@@ -78,7 +84,7 @@ namespace Code.AI
         {
             Vector2 directionVector = _targetObject.GetPosition() - controlledObject.GetPosition();
 
-            return directionVector.magnitude < 5f;
+            return directionVector.magnitude < _model.AttackRange;
         }
 
         private float CalculateAngleDifference(IReadOnlyMovable controlledObject, Vector2 moveDirection)
