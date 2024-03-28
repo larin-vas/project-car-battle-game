@@ -5,6 +5,7 @@ using Code.Physics.Force;
 using Code.Wheel;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Code.Transport.Car
 {
@@ -12,10 +13,10 @@ namespace Code.Transport.Car
     {
         private IMovableInput _input;
 
-        private readonly CarModel _carModel;
-        private readonly ITransportView _carView;
+        private readonly CarModel _model;
+        private readonly ITransportView _view;
 
-        private readonly IWheelSystem _suspension;
+        private readonly IWheelSystem _wheelSystem;
         private readonly IWeaponSystem _weaponSystem;
 
         private readonly ICollisionTrigger _collisionTrigger;
@@ -29,10 +30,10 @@ namespace Code.Transport.Car
         {
             _input = input;
 
-            _carModel = playerModel;
-            _carView = playerView;
+            _model = playerModel;
+            _view = playerView;
 
-            _suspension = suspension;
+            _wheelSystem = suspension;
             _weaponSystem = weaponSystem;
 
             _collisionTrigger = collisionTrigger;
@@ -40,48 +41,62 @@ namespace Code.Transport.Car
 
         public override void Enable()
         {
-            _carView.Activator.Enable();
-            _suspension.Enable();
+            _view.Activator.Enable();
+            _weaponSystem.Enable();
+            _wheelSystem.Enable();
         }
 
         public override void Disable()
         {
-            _carView.Activator.Disable();
-            _suspension.Disable();
+            _view.Activator.Disable();
+            _weaponSystem.Disable();
+            _wheelSystem.Disable();
         }
 
         public override void SetPosition(Vector2 position)
         {
-            _carModel.Transformation.Position.Value = position;
-            _suspension.SetPosition(position);
+            _model.Transformation.Position.Value = position;
+            _wheelSystem.SetPosition(position);
+            _weaponSystem.SetPosition(position);
         }
 
         public override void SetRotation(Quaternion rotation)
         {
-            _carModel.Transformation.Rotation.Value = rotation;
-            _suspension.SetRotation(rotation);
+            _model.Transformation.Rotation.Value = rotation;
+            _wheelSystem.SetRotation(rotation);
+            _weaponSystem.SetRotation(rotation);
         }
 
         public override Vector2 GetPosition()
         {
-            return _carModel.Transformation.Position.Value;
+            return _model.Transformation.Position.Value;
         }
 
         public override Quaternion GetRotation()
         {
-            return _carModel.Transformation.Rotation.Value;
+            return _model.Transformation.Rotation.Value;
+        }
+
+        public override float GetCurrentHealth()
+        {
+            return _model.CurrentHealthPoints;
+        }
+
+        public override void RestoreHealth()
+        {
+            _model.CurrentHealthPoints = _model.MaxHealthPoints;
         }
 
         public override void SetInput(IInput input)
         {
             _input = input;
-            _suspension.SetInput(input);
+            _wheelSystem.SetInput(input);
             _weaponSystem.SetInput(input);
         }
 
         public override void Tick()
         {
-            _suspension.Tick();
+            _wheelSystem.Tick();
 
             _weaponSystem.Tick();
 
@@ -89,7 +104,7 @@ namespace Code.Transport.Car
 
             UpdateCurrentMassCenter();
 
-            Vector2 rotationCenter = _suspension.CalculateRotationCenter();
+            Vector2 rotationCenter = _wheelSystem.CalculateRotationCenter();
 
             CalculateForcesAndTorques(rotationCenter, out Vector2 totalForce, out float totalTorque);
 
@@ -101,38 +116,36 @@ namespace Code.Transport.Car
 
             UpdateAccelerationVector(totalForce);
 
-            _carModel.InertiaVector.Value = totalForce;
+            _model.InertiaVector.Value = totalForce;
 
             _weaponSystem.SetPosition(GetPosition());
             _weaponSystem.SetRotation(GetRotation());
-
-            //Debug.Log(_carModel.CurrentHealthPoints);
         }
 
         private void UpdateAcceleration()
         {
-            float newAcceleration = _carModel.CurrentAcceleration;
+            float newAcceleration = _model.CurrentAcceleration;
 
             if (_input.Movement != 0)
-                newAcceleration += _carModel.AccelerationRate * Time.deltaTime;
+                newAcceleration += _model.AccelerationRate * Time.deltaTime;
             else
-                newAcceleration -= _carModel.AccelerationRate * 10f * Time.deltaTime;
+                newAcceleration -= _model.AccelerationRate * 10f * Time.deltaTime;
 
-            newAcceleration = Mathf.Clamp(newAcceleration, 0f, _carModel.MaxAcceleration);
+            newAcceleration = Mathf.Clamp(newAcceleration, 0f, _model.MaxAcceleration);
 
             // Сбрасываем текущее ускорение, если нажата кнопка тормоза или ручного тормоза
             if (_input.Brake || _input.Handbrake)
                 newAcceleration = 0f;
 
-            _carModel.CurrentAcceleration = newAcceleration;
+            _model.CurrentAcceleration = newAcceleration;
         }
 
         private void UpdateCurrentMassCenter()
         {
-            _carModel.CurrentMassCenter =
+            _model.CurrentMassCenter =
                 GetPosition() +
-                (Vector2)(GetRotation() * _carModel.BaseMassCenter) -
-                _carModel.AccelerationVector;
+                (Vector2)(GetRotation() * _model.BaseMassCenter) -
+                _model.AccelerationVector;
         }
 
         private void UpdateRotationByTorque(Vector2 rotationCenter, float torque)
@@ -146,8 +159,12 @@ namespace Code.Transport.Car
 
         private void UpdateAccelerationVector(Vector2 totalForce)
         {
-            Vector2 newAccelerationVector = totalForce - _carModel.InertiaVector.Value;
-            _carModel.AccelerationVector = Vector2.Lerp(_carModel.AccelerationVector, newAccelerationVector.normalized * Mathf.Clamp(newAccelerationVector.magnitude, 0f, 0.3f), Time.deltaTime);
+            Vector2 newAccelerationVector = totalForce - _model.InertiaVector.Value;
+            _model.AccelerationVector =
+                Vector2.Lerp(
+                    _model.AccelerationVector,
+                    newAccelerationVector.normalized * Mathf.Clamp(newAccelerationVector.magnitude, 0f, 0.3f),
+                    Time.deltaTime);
         }
 
         private void CalculateForcesAndTorques(Vector2 rotationCenter, out Vector2 totalForce, out float totalTorque)
@@ -157,7 +174,7 @@ namespace Code.Transport.Car
             totalForce = Vector2.zero;
             totalTorque = 0f;
 
-            foreach (PhysicForce force in _suspension.GetWheelsForces())
+            foreach (PhysicForce force in _wheelSystem.GetWheelsForces())
             {
                 totalForce += force.Direction;
 
@@ -171,8 +188,8 @@ namespace Code.Transport.Car
                 // Рассчитываем момент вращения как кросс-продукт силы и расстояния до точки приложения силы
                 Vector2 distance = force.Point - rotationCenter;
                 totalTorque += Vector3.Cross(distance, -totalForce).z;
-                float newHealthPoints = _carModel.CurrentHealthPoints - force.CollisionDamage;
-                _carModel.CurrentHealthPoints = Mathf.Clamp(newHealthPoints, 0f, _carModel.MaxHealthPoints);
+                float newHealthPoints = _model.CurrentHealthPoints - force.CollisionDamage;
+                _model.CurrentHealthPoints = Mathf.Clamp(newHealthPoints, 0f, _model.MaxHealthPoints);
             }
             if ((collisions.Count > 0) &&
                 ((collisions[0].Point - (GetPosition() - totalForce * Time.deltaTime / 10f)).magnitude > (collisions[0].Point - (GetPosition() + totalForce * Time.deltaTime)).magnitude))

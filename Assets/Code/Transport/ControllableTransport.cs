@@ -4,14 +4,19 @@ using Zenject;
 
 namespace Code.Car
 {
-    public abstract class ControllableTransport : ForceMovable, IActivatable, ITickable
+    public abstract class ControllableTransport : ForceMovable, IActivatable, IHealthProvider, ITickable
     {
+        public abstract void Enable();
+
         public abstract void Disable();
 
-        public abstract void Enable();
+        public abstract float GetCurrentHealth();
+
+        public abstract void RestoreHealth();
 
         public abstract void SetInput(IInput input);
 
         public abstract void Tick();
+
     }
 }
