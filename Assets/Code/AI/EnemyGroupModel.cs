@@ -37,7 +37,7 @@ namespace Code.AI
                 throw new ArgumentOutOfRangeException(nameof(attackRange));
 
             MaxEnemies = maxEnemies;
-            CurrentEnemies = MaxEnemies;
+            CurrentEnemies = 0;
 
             AttackRange = attackRange;
 
