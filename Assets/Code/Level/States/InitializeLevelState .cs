@@ -15,33 +15,37 @@ namespace Code.Level.States
 
         private readonly CarController _playerCar;
 
-        private readonly EnemyGroupController _aiController;
+        private readonly EnemyGroupController _enemyGroup;
 
         private CameraController _camera;
+
+        private readonly Vector2 _playerStartPosition;
 
         public InitializeLevelState(
             StateMachine stateMachine,
             MapController map,
             CarController playerCar,
-            EnemyGroupController aiController,
-            CameraController camera)
+            EnemyGroupController enemyGroup,
+            CameraController camera,
+            Vector2 playerStartPosition)
         {
             _stateMachine = stateMachine;
             _map = map;
             _playerCar = playerCar;
-            _aiController = aiController;
+            _enemyGroup = enemyGroup;
             _camera = camera;
+            _playerStartPosition = playerStartPosition;
         }
 
         public void Enter()
         {
             _map.Generate();
 
-            _playerCar.SetPosition(new Vector2(50, 50));
+            _playerCar.SetPosition(_playerStartPosition);
 
             _camera.SetPosition(_playerCar.GetPosition());
 
-            _aiController.Initialize();
+            _enemyGroup.Initialize();
 
             _stateMachine.EnterIn<PlayingLevelState>();
         }

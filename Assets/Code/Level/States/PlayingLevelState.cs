@@ -19,29 +19,37 @@ namespace Code.Level.States
 
         private readonly CameraController _camera;
 
-        private readonly EnemyGroupController _ai;
+        private readonly EnemyGroupController _enemyGroup;
+
+        private int _enemiesCount;
 
         public PlayingLevelState(
             StateMachine stateMachine,
             IUIInput input,
             MapController map,
             CarController playerCar,
-            EnemyGroupController ai,
-            CameraController camera)
+            EnemyGroupController enemyGroup,
+            CameraController camera,
+            int enemiesCount)
         {
             _stateMachine = stateMachine;
             _input = input;
             _map = map;
             _playerCar = playerCar;
-            _ai = ai;
+            _enemyGroup = enemyGroup;
             _camera = camera;
+            _enemiesCount = enemiesCount;
         }
 
         public void Enter()
-        { }
+        {
+            _enemyGroup.OnEnemyDie += OnEnemyDie;
+        }
 
         public void Exit()
-        { }
+        {
+            _enemyGroup.OnEnemyDie -= OnEnemyDie;
+        }
 
         public void Tick()
         {
@@ -53,7 +61,17 @@ namespace Code.Level.States
             _playerCar.Tick();
             _camera.Tick();
 
-            _ai.Tick();
+            _enemyGroup.Tick();
+        }
+
+        private void OnEnemyDie()
+        {
+            _enemiesCount--;
+
+            if (_enemiesCount <= 0)
+                _stateMachine.EnterIn<InitializeLevelState>();
+            else
+                _enemyGroup.SpawnEnemyAtRandomPosition();
         }
     }
 }

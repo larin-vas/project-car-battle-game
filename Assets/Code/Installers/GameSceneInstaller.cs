@@ -19,6 +19,9 @@ public class GameSceneInstaller : MonoInstaller
     public MapConfig MapData { get; private set; }
 
     [field: SerializeField]
+    public LevelConfig LevelData { get; private set; }
+
+    [field: SerializeField]
     public EnemyGroupConfig EnemyGroupData { get; private set; }
 
     [field: SerializeField]
@@ -37,6 +40,8 @@ public class GameSceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<PlayerInputConfig>().FromInstance(InputData).AsSingle();
 
         Container.BindInterfacesAndSelfTo<MapConfig>().FromInstance(MapData).AsSingle();
+
+        Container.BindInterfacesAndSelfTo<LevelConfig>().FromInstance(LevelData).AsSingle();
 
         Container.BindInterfacesAndSelfTo<CameraConfig>().FromInstance(CameraData).AsSingle();
 

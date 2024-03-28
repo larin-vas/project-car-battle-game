@@ -22,6 +22,7 @@ namespace Code.Level
         private readonly IFactory<IReadOnlyMovable, CameraController> _cameraFactory;
         private readonly IFactory<IReadOnlyMovable, EnemyGroupController> _enemyGroupFactory;
 
+        private readonly LevelConfig _levelConfig;
         private readonly CarConfig _playerCarConfig;
 
         public LevelController(
@@ -30,6 +31,7 @@ namespace Code.Level
             IFactory<CarConfig, CarController> carFactory,
             IFactory<IReadOnlyMovable, CameraController> cameraFactory,
             IFactory<IReadOnlyMovable, EnemyGroupController> enemyGroupFactory,
+            LevelConfig levelConfig,
             [Inject(Id = "Player")] CarConfig playerCarConfig)
         {
             _stateMachine = new StateMachine();
@@ -42,6 +44,7 @@ namespace Code.Level
             _cameraFactory = cameraFactory;
             _enemyGroupFactory = enemyGroupFactory;
 
+            _levelConfig = levelConfig;
             _playerCarConfig = playerCarConfig;
         }
 
@@ -65,11 +68,20 @@ namespace Code.Level
 
         public void InitializeStates(CarController playerCar, EnemyGroupController enemyGroup, CameraController camera)
         {
-            InitializeLevelState initializeLevelState = new InitializeLevelState(_stateMachine, _map, playerCar, enemyGroup, camera);
+            InitializeLevelState initializeLevelState =
+                new InitializeLevelState(
+                    _stateMachine, _map,
+                    playerCar, enemyGroup,
+                    camera, _levelConfig.PlayerStartPosition);
 
-            PlayingLevelState playingLevelState = new PlayingLevelState(_stateMachine, _input, _map, playerCar, enemyGroup, camera);
+            PlayingLevelState playingLevelState =
+                new PlayingLevelState(
+                    _stateMachine, _input, _map,
+                    playerCar, enemyGroup, camera,
+                    _levelConfig.TargetEnemiesCount);
 
-            PauseLevelState pauseLevelState = new PauseLevelState(_stateMachine, _input);
+            PauseLevelState pauseLevelState =
+                new PauseLevelState(_stateMachine, _input);
 
             _stateMachine.AddStates(initializeLevelState, playingLevelState, pauseLevelState);
         }
