@@ -31,22 +31,22 @@ namespace Code.Infrastructure.ScriptableObjects
         [SerializeField]
         private CarView _carView;
 
-        [SerializeField, Min(0)]
+        [SerializeField, Min(0f)]
         private float _collisionDamage;
 
-        [SerializeField, Min(1f)]
+        [SerializeField, Min(0f)]
         private float _maxHealthPoints;
 
-        [SerializeField, Min(0)]
+        [SerializeField, Min(0f)]
         private float _maxAcceleration;
 
-        [SerializeField, Min(0)]
+        [SerializeField, Min(0f)]
         private float _accelerationRate;
 
         [SerializeField]
         private Vector2 _massCenterPosition;
 
-        [SerializeField, Min(0)]
+        [SerializeField, Min(0f)]
         private float _mass;
 
         [SerializeField]

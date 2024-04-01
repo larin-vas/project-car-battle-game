@@ -31,12 +31,12 @@ namespace Code.Wheel
         [SerializeField]
         private WheelAlignment _alignment;
 
-        [SerializeField, Range(0, 360)]
+        [SerializeField, Range(0f, 360f)]
         private float _minRotationAngle;
-        [SerializeField, Range(0, 360)]
+        [SerializeField, Range(0f, 360f)]
         private float _maxRotationAngle;
 
-        [SerializeField, Min(0)]
+        [SerializeField, Min(0f)]
         private float _rotationSpeed;
 
         [SerializeField]

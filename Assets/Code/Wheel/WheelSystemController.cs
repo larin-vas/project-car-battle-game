@@ -1,3 +1,4 @@
+using Assets.Code.Transport.Car.CarMovement;
 using Code.Physics.Force;
 using Code.Transport;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ namespace Code.Wheel
     {
         private IMovableInput _input;
 
-        private readonly ITransportModel _transportModel;
+        private readonly CarMovementModel _transportModel;
 
         private readonly ICollection<WheelController> _wheels;
 
         public WheelSystemController(
             IMovableInput input,
-            ITransportModel carModel,
+            CarMovementModel carModel,
             ICollection<WheelController> wheels)
         {
             _input = input;
