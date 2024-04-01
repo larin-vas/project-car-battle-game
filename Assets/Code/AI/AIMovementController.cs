@@ -1,6 +1,7 @@
 using Code.AI.Pathfinding;
 using Code.Car;
 using Code.Common.Interfaces;
+using Code.Services;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,19 +15,23 @@ namespace Code.AI
 
         private readonly IReadOnlyMovable _targetObject;
 
+        private readonly ConstantsService _constants;
+
         private readonly AIMovableInput _input;
 
         public AIMovementController(
             EnemyGroupModel model,
             IPathfinder pathfinder,
-            IReadOnlyMovable targetObject) :
-            this(model, pathfinder, targetObject, new AIMovableInput())
+            IReadOnlyMovable targetObject,
+            ConstantsService constants) :
+            this(model, pathfinder, targetObject, constants, new AIMovableInput())
         { }
 
         public AIMovementController(
             EnemyGroupModel model,
             IPathfinder pathfinder,
             IReadOnlyMovable targetObject,
+            ConstantsService constants,
             AIMovableInput movableInput)
         {
             _model = model;
@@ -34,6 +39,8 @@ namespace Code.AI
             _pathfinder = pathfinder;
 
             _targetObject = targetObject;
+
+            _constants = constants;
 
             _input = movableInput;
         }
@@ -100,12 +107,12 @@ namespace Code.AI
         private float CalculateRotation(float angleDifference)
         {
             float angleSign = Mathf.Sign(angleDifference);
-            return (Mathf.Abs(angleDifference) < 90f) ? angleSign : -angleSign;
+            return (Mathf.Abs(angleDifference) < _constants.AngleToChangeDirection) ? angleSign : -angleSign;
         }
 
         private float CalculateMovement(float angleDifference)
         {
-            return (angleDifference < 90f) ? 1f : -1f;
+            return (angleDifference < _constants.AngleToChangeDirection) ? 1f : -1f;
         }
     }
 }

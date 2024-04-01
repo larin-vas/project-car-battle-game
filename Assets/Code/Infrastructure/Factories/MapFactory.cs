@@ -4,19 +4,25 @@ using Code.Physics;
 using Code.Infrastructure.ScriptableObjects;
 using UnityEngine;
 using Zenject;
+using Code.Services;
 
 namespace Code.Infrastructure.Factories
 {
     public class MapFactory : IFactory<MapController>
     {
+        private readonly ConstantsService _constants;
+
         private readonly IFactory<TileConfig, TileModel> _tileFactory;
 
         private readonly MapConfig _config;
 
         public MapFactory(
-            IFactory<TileConfig, TileModel> tileFactory, 
+            ConstantsService constants,
+            IFactory<TileConfig, TileModel> tileFactory,
             MapConfig config)
         {
+            _constants = constants;
+
             _tileFactory = tileFactory;
 
             _config = config;
@@ -32,7 +38,7 @@ namespace Code.Infrastructure.Factories
             MapUpdater groundMap = view.GroundMap;
             MapUpdater hillMap = view.HillMap;
 
-            int seed = (_config.UseConfigSeed) ? _config.Seed : Random.Range(0, 100000);
+            int seed = (_config.UseConfigSeed) ? _config.Seed : Random.Range(0, _constants.MaxMapSeed);
 
             MapModel model = new MapModel(
                 seed, _config.Width, _config.Height, _config.MapScale,

@@ -46,16 +46,16 @@ namespace Code.Infrastructure.ScriptableObjects
         [SerializeField, Min(1)]
         private int _height;
 
-        [SerializeField, Min(1)]
+        [SerializeField, Min(1f)]
         private float _mapScale;
 
         [SerializeField, Min(1)]
         private int _borderWidth;
 
-        [SerializeField, Min(0)]
+        [SerializeField, Min(0f)]
         private float _drag;
 
-        [SerializeField, Range(0, 1)]
+        [SerializeField, Range(0f, 1f)]
         private float _hillsRatio;
 
         [SerializeField]

@@ -11,6 +11,8 @@ namespace Code.Physics
 
         public float CollisionDamage { get; }
 
+        public float ElasticityRate { get; }
+
         public CollisionInfo(Vector2 point, Vector2 objectForceVector, float collisionDamage)
         {
             if (collisionDamage < 0)

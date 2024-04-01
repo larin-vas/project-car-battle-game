@@ -18,3 +18,6 @@ MonoBehaviour:
   _spawnPoints:
   - {x: 30, y: 30}
   - {x: 70, y: 70}
+  - {x: 70, y: 30}
+  - {x: 30, y: 70}
+  - {x: 40, y: 40}

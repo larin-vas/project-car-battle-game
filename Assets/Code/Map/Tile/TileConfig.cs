@@ -26,10 +26,10 @@ namespace Code.Map.Tile
         [SerializeField]
         private TileType _type;
 
-        [SerializeField, Range(0, 1)]
+        [SerializeField, Range(0f, 1f)]
         private float _elasticityRate;
 
-        [SerializeField, Range(0, 1)]
+        [SerializeField, Range(0f, 1f)]
         private float _frictionRate;
     }
 }

@@ -1,6 +1,7 @@
 using Code.Common;
 using Code.Map;
 using Code.Map.Tile;
+using Code.Services;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,29 +9,19 @@ namespace Code.AI.Pathfinding
 {
     public class AStarPathfinder : IPathfinder
     {
-        private static readonly Vector2Int[] AllowedDirections =
-        {
-            new Vector2Int(-1, -1),
-            new Vector2Int(-1,  0),
-            new Vector2Int(-1,  1),
-
-            new Vector2Int( 0, -1),
-            new Vector2Int( 0,  1),
-
-            new Vector2Int( 1, -1),
-            new Vector2Int( 1,  0),
-            new Vector2Int( 1,  1)
-        };
-
         private readonly Observable<TileModel>[,] _map;
 
-        public AStarPathfinder(MapController mapController)
+        private readonly ConstantsService _constants;
+
+        public AStarPathfinder(ConstantsService constants, MapController mapController)
         {
+            _constants = constants;
             _map = mapController.GetMap();
         }
 
-        public AStarPathfinder(Observable<TileModel>[,] map)
+        public AStarPathfinder(ConstantsService constants, Observable<TileModel>[,] map)
         {
+            _constants = constants;
             _map = map;
         }
 
@@ -88,7 +79,7 @@ namespace Code.AI.Pathfinding
         {
             List<Vector2Int> neighbors = new List<Vector2Int>();
 
-            foreach (Vector2Int direction in AllowedDirections)
+            foreach (Vector2Int direction in _constants.PathfinderAllowedDirections)
             {
                 Vector2Int neighborPosition = position + direction;
 
@@ -105,7 +96,6 @@ namespace Code.AI.Pathfinding
         private float Heuristic(Vector2Int a, Vector2Int b)
         {
             return (a - b).magnitude;
-            //return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
         }
     }
 }
