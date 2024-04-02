@@ -1,31 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using Code.Infrastructure.ScriptableObjects;
 using UnityEngine;
 
 namespace Code.Services
 {
     public class ConstantsService
     {
-        public int ProjectilePoolInitSize = 10;
+        public int ProjectilePoolInitSize { get; }
 
-        public float AngleToChangeDirection = 90f;
+        public float AngleToChangeDirection { get; }
 
-        public int MaxMapSeed = 100000;
+        public int MaxMapSeed { get; }
 
-        public int CollisionTriggerBufferSize = 100;
+        public int CollisionTriggerBufferSize { get; }
 
-        public Vector2Int[] PathfinderAllowedDirections =
+        public Vector2Int[] PathfinderAllowedDirections { get; }
+
+        public ConstantsService(ConstantsConfig config)
         {
-            new Vector2Int(-1, -1),
-            new Vector2Int(-1,  0),
-            new Vector2Int(-1,  1),
-
-            new Vector2Int( 0, -1),
-            new Vector2Int( 0,  1),
-
-            new Vector2Int( 1, -1),
-            new Vector2Int( 1,  0),
-            new Vector2Int( 1,  1)
-        };
+            ProjectilePoolInitSize = config.ProjectilePoolInitSize;
+            AngleToChangeDirection = config.AngleToChangeDirection;
+            MaxMapSeed = config.MaxMapSeed;
+            CollisionTriggerBufferSize = config.CollisionTriggerBufferSize;
+            PathfinderAllowedDirections = config.PathfinderAllowedDirections;
+        }
     }
 }
