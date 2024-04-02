@@ -1,5 +1,4 @@
-using System;
-using UnityEngine;
+using Code.Infrastructure.ScriptableObjects;
 
 namespace Code.Physics
 {
@@ -11,8 +10,11 @@ namespace Code.Physics
 
         public float AccelerationDecayRate { get; }
 
-        public PhysicsService()
+        public PhysicsService(PhysicsConfig config)
         {
+            RotationSpeed = config.RotationSpeed;
+            MaxMassCenterDeviation = config.MaxMassCenterDeviation;
+            AccelerationDecayRate = config.AccelerationDecayRate;
         }
     }
 }
