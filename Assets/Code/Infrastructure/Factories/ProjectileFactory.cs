@@ -1,6 +1,7 @@
 ﻿using Code.Combat.Projectile;
 using Code.Common;
 using Code.Physics;
+using Code.Services;
 using UnityEngine;
 using Zenject;
 
@@ -8,10 +9,13 @@ namespace Code.Infrastructure.Factories
 {
     public class ProjectileFactory : IFactory<ProjectileConfig, ProjectileController>
     {
+        private readonly ConstantsService _constants;
+
         private readonly Collider2D _ignoredCollider;
 
-        public ProjectileFactory(Collider2D ignoredCollider)
+        public ProjectileFactory(ConstantsService constants, Collider2D ignoredCollider)
         {
+            _constants = constants;
             _ignoredCollider = ignoredCollider;
         }
 
@@ -37,7 +41,7 @@ namespace Code.Infrastructure.Factories
             contactFilter.SetLayerMask(layerToIgnore);
             contactFilter.useLayerMask = true;
 
-            CollisionTrigger collisionTrigger = new CollisionTrigger(view.Collider, contactFilter, _ignoredCollider);
+            CollisionTrigger collisionTrigger = new CollisionTrigger(_constants, view.Collider, contactFilter, _ignoredCollider);
 
             ProjectileController Projectile = new ProjectileController(model, view, collisionTrigger);
 

@@ -4,6 +4,7 @@ using Code.Car;
 using Code.Common.Interfaces;
 using Code.Infrastructure.Pools;
 using Code.Infrastructure.ScriptableObjects;
+using Code.Services;
 using Code.Transport.Car;
 using Zenject;
 
@@ -11,6 +12,8 @@ namespace Code.Infrastructure.Factories
 {
     public class EnemyGroupFactory : IFactory<IReadOnlyMovable, EnemyGroupController>
     {
+        private readonly ConstantsService _constants;
+
         private readonly IPathfinder _pathfinder;
 
         private readonly IFactory<CarConfig, CarController> _carFactory;
@@ -18,12 +21,15 @@ namespace Code.Infrastructure.Factories
         private readonly EnemyGroupConfig _enemyGroupConfig;
 
         private readonly CarConfig _enemyCarConfig;
+
         public EnemyGroupFactory(
+            ConstantsService constants,
             IPathfinder pathfinder,
             IFactory<CarConfig, CarController> carFactory,
             EnemyGroupConfig enemyGroupConfig,
             [Inject(Id = "Enemy")] CarConfig enemyCarConfig)
         {
+            _constants = constants;
             _pathfinder = pathfinder;
             _carFactory = carFactory;
             _enemyGroupConfig = enemyGroupConfig;
@@ -42,7 +48,7 @@ namespace Code.Infrastructure.Factories
                 _enemyGroupConfig.SpawnPoints);
 
             AIMovementController movementController =
-                new AIMovementController(enemyGroupModel, _pathfinder, targetObject);
+                new AIMovementController(enemyGroupModel, _pathfinder, targetObject, _constants);
 
             IPool<ControllableTransport> pool =
                 new ObjectPool<CarConfig, ControllableTransport>(_carFactory, _enemyCarConfig, _enemyGroupConfig.MaxEnemies);

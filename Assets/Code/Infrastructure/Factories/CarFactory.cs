@@ -11,21 +11,27 @@ using Zenject;
 using Assets.Code.Transport.Car.CarMovement;
 using Assets.Code.Transport.Car.CarHealth;
 using Code.Map;
+using Code.Services;
 
 namespace Code.Infrastructure.Factories
 {
     public class CarFactory : IFactory<CarConfig, CarController>
     {
+        private readonly ConstantsService _constants;
+
         private readonly IMovableInput _input;
 
         private readonly IFactory<Transform, WheelConfig, WheelController> _wheelFactory;
         private readonly IFactory<CarView, GunConfig, GunController> _gunFactory;
 
         public CarFactory(
+            ConstantsService constants,
             IMovableInput input,
             IFactory<Transform, WheelConfig, WheelController> wheelFactory,
             IFactory<CarView, GunConfig, GunController> gunFactory)
         {
+            _constants = constants;
+
             _input = input;
 
             _wheelFactory = wheelFactory;
@@ -52,7 +58,7 @@ namespace Code.Infrastructure.Factories
                 config.AccelerationRate, config.MaxAcceleration,
                 config.MassCenterPosition, config.Mass);
 
-            CollisionTrigger collisionTrigger = new CollisionTrigger(view.Collider);
+            CollisionTrigger collisionTrigger = new CollisionTrigger(_constants, view.Collider);
 
             CarMovementController movementController = new CarMovementController(_input, null, movementModel, view, collisionTrigger);
 

@@ -12,14 +12,15 @@ namespace Code.Infrastructure.Factories
 {
     public class GunFactory : IFactory<CarView, GunConfig, GunController>
     {
-        private readonly IAimingInput _input;
-
         private readonly ConstantsService _constants;
 
-        public GunFactory(IAimingInput input, ConstantsService constants)
+        private readonly IAimingInput _input;
+
+        public GunFactory(ConstantsService constants, IAimingInput input)
         {
-            _input = input;
             _constants = constants;
+
+            _input = input;
         }
 
         public GunController Create(CarView parentCarView, GunConfig config)
@@ -35,7 +36,7 @@ namespace Code.Infrastructure.Factories
 
             view.PhysicObjectUpdater.Construct(transformation);
 
-            ProjectileFactory projectileFactory = new ProjectileFactory(parentCarView.Collider);
+            ProjectileFactory projectileFactory = new ProjectileFactory(_constants, parentCarView.Collider);
 
             ObjectPool<ProjectileConfig, ProjectileController> projectilePool =
                 new ObjectPool<ProjectileConfig, ProjectileController>(projectileFactory, config.ProjectileConfig, _constants.ProjectilePoolInitSize);

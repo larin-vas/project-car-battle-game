@@ -50,7 +50,7 @@ namespace Code.Infrastructure.Factories
             groundMap.Construct(model.Map);
             hillMap.Construct(model.Map);
 
-            CollisionTrigger collisionTrigger = new CollisionTrigger(view.Collider);
+            CollisionTrigger collisionTrigger = new CollisionTrigger(_constants, view.Collider);
 
             MapController map = new MapController(model, view, generator, collisionTrigger);
 
