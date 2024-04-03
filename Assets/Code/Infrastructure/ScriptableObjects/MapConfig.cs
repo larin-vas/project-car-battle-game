@@ -4,64 +4,43 @@ using UnityEngine;
 
 namespace Code.Infrastructure.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "New Map", menuName = "Map")]
+    [CreateAssetMenu(fileName = "New Map", menuName = "Configs/Map")]
     public class MapConfig : ScriptableObject
     {
-        public MapView MapView => _mapView;
+        [field: SerializeField]
+        public MapView MapView { get; private set; }
 
-        public MapBootstrapType BootstrapType => _mapBootstrap;
+        [field: SerializeField]
+        public MapBootstrapType BootstrapType { get; private set; }
 
-        public bool UseConfigSeed => _useConfigSeed;
-        public int Seed => _seed;
+        [field: SerializeField]
+        public bool UseConfigSeed { get; private set; }
 
-        public int Width => _width;
-        public int Height => _height;
+        [field: SerializeField]
+        public int Seed { get; private set; }
 
-        public float MapScale => _mapScale;
+        [field: SerializeField, Min(1)]
+        public int Width { get; private set; }
 
-        public int BorderWidth => _borderWidth;
+        [field: SerializeField, Min(1)]
+        public int Height { get; private set; }
 
-        public float Drag => _drag;
+        [field: SerializeField, Min(1f)]
+        public float MapScale { get; private set; }
 
-        public float HillsRatio => _hillsRatio;
+        [field: SerializeField, Min(1)]
+        public int BorderWidth { get; private set; }
 
-        public TileConfig GroundTileConfig => _groundTileConfig;
-        public TileConfig HillTileConfig => _hillTileConfig;
+        [field: SerializeField, Min(0f)]
+        public float Drag { get; private set; }
 
-        [SerializeField]
-        private MapView _mapView;
+        [field: SerializeField, Range(0f, 1f)]
+        public float HillsRatio { get; private set; }
 
-        [SerializeField]
-        private MapBootstrapType _mapBootstrap;
+        [field: SerializeField]
+        public TileConfig GroundTileConfig { get; private set; }
 
-        [SerializeField]
-        private bool _useConfigSeed;
-
-        [SerializeField]
-        private int _seed;
-
-        [SerializeField, Min(1)]
-        private int _width;
-
-        [SerializeField, Min(1)]
-        private int _height;
-
-        [SerializeField, Min(1f)]
-        private float _mapScale;
-
-        [SerializeField, Min(1)]
-        private int _borderWidth;
-
-        [SerializeField, Min(0f)]
-        private float _drag;
-
-        [SerializeField, Range(0f, 1f)]
-        private float _hillsRatio;
-
-        [SerializeField]
-        private TileConfig _groundTileConfig;
-
-        [SerializeField]
-        private TileConfig _hillTileConfig;
+        [field: SerializeField]
+        public TileConfig HillTileConfig { get; private set; }
     }
 }

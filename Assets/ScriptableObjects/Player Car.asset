@@ -12,52 +12,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752bb0f25182d9b46a9982b7f715d372, type: 3}
   m_Name: Player Car
   m_EditorClassIdentifier: 
-  _carView: {fileID: 4107235813603685845, guid: 22914b32740c5a04db743dfdafb0177c, type: 3}
-  _collisionDamage: 1
-  _maxHealthPoints: 200
-  _maxAcceleration: 1
-  _accelerationRate: 0.2
-  _massCenterPosition: {x: 0, y: 0.1}
-  _mass: 10
-  _whees:
-  - _wheelView: {fileID: 7723306323960974905, guid: e1edaf10dcd7b984caaa10f6ff7e3da0, type: 3}
-    _localPosition: {x: -0.3, y: 0.6}
-    _alignment: -1
-    _minRotationAngle: 30
-    _maxRotationAngle: 45
-    _rotationSpeed: 10
-    _isDriveWheel: 0
-    _isLockedOnHandbrake: 0
-  - _wheelView: {fileID: 7723306323960974905, guid: e1edaf10dcd7b984caaa10f6ff7e3da0, type: 3}
-    _localPosition: {x: 0.3, y: 0.6}
-    _alignment: 1
-    _minRotationAngle: 30
-    _maxRotationAngle: 45
-    _rotationSpeed: 10
-    _isDriveWheel: 0
-    _isLockedOnHandbrake: 0
-  - _wheelView: {fileID: 7723306323960974905, guid: e1edaf10dcd7b984caaa10f6ff7e3da0, type: 3}
-    _localPosition: {x: -0.3, y: -0.55}
-    _alignment: -1
-    _minRotationAngle: 0
-    _maxRotationAngle: 0
-    _rotationSpeed: 0
-    _isDriveWheel: 1
-    _isLockedOnHandbrake: 1
-  - _wheelView: {fileID: 7723306323960974905, guid: e1edaf10dcd7b984caaa10f6ff7e3da0, type: 3}
-    _localPosition: {x: 0.3, y: -0.55}
-    _alignment: 1
-    _minRotationAngle: 0
-    _maxRotationAngle: 0
-    _rotationSpeed: 0
-    _isDriveWheel: 1
-    _isLockedOnHandbrake: 1
-  _guns:
-  - _gunView: {fileID: 4454817131071477769, guid: 3ee274ff8b248444facb6707861bb086, type: 3}
-    _localPosition: {x: 0, y: 0}
-    _rotationSpeed: 2
-    _reloadTime: 1
-    _projectileConfig:
-      _projectileView: {fileID: 6050328295896178722, guid: 93cfceb3b9e2aeb4da42af88e74da4d1, type: 3}
-      _damage: 90
-      _speed: 1000
+  <CarView>k__BackingField: {fileID: 4107235813603685845, guid: 22914b32740c5a04db743dfdafb0177c, type: 3}
+  <CollisionDamage>k__BackingField: 1
+  <MaxHealthPoints>k__BackingField: 100
+  <MaxAcceleration>k__BackingField: 1
+  <AccelerationRate>k__BackingField: 0.2
+  <MassCenterPosition>k__BackingField: {x: 0, y: 0.1}
+  <Mass>k__BackingField: 10
+  <Wheels>k__BackingField:
+  - <WheelView>k__BackingField: {fileID: 7723306323960974905, guid: e1edaf10dcd7b984caaa10f6ff7e3da0, type: 3}
+    <LocalPosition>k__BackingField: {x: -0.3, y: 0.6}
+    <Alignment>k__BackingField: -1
+    <MinRotationAngle>k__BackingField: 30
+    <MaxRotationAngle>k__BackingField: 45
+    <RotationSpeed>k__BackingField: 10
+    <IsDriveWheel>k__BackingField: 0
+    <IsLockedOnHandbrake>k__BackingField: 0
+  - <WheelView>k__BackingField: {fileID: 7723306323960974905, guid: e1edaf10dcd7b984caaa10f6ff7e3da0, type: 3}
+    <LocalPosition>k__BackingField: {x: 0.3, y: 0.6}
+    <Alignment>k__BackingField: 1
+    <MinRotationAngle>k__BackingField: 30
+    <MaxRotationAngle>k__BackingField: 45
+    <RotationSpeed>k__BackingField: 10
+    <IsDriveWheel>k__BackingField: 0
+    <IsLockedOnHandbrake>k__BackingField: 0
+  - <WheelView>k__BackingField: {fileID: 7723306323960974905, guid: e1edaf10dcd7b984caaa10f6ff7e3da0, type: 3}
+    <LocalPosition>k__BackingField: {x: -0.3, y: -0.55}
+    <Alignment>k__BackingField: -1
+    <MinRotationAngle>k__BackingField: 0
+    <MaxRotationAngle>k__BackingField: 0
+    <RotationSpeed>k__BackingField: 0
+    <IsDriveWheel>k__BackingField: 1
+    <IsLockedOnHandbrake>k__BackingField: 1
+  - <WheelView>k__BackingField: {fileID: 7723306323960974905, guid: e1edaf10dcd7b984caaa10f6ff7e3da0, type: 3}
+    <LocalPosition>k__BackingField: {x: 0.3, y: -0.55}
+    <Alignment>k__BackingField: 1
+    <MinRotationAngle>k__BackingField: 0
+    <MaxRotationAngle>k__BackingField: 0
+    <RotationSpeed>k__BackingField: 0
+    <IsDriveWheel>k__BackingField: 1
+    <IsLockedOnHandbrake>k__BackingField: 1
+  <Guns>k__BackingField:
+  - <GunView>k__BackingField: {fileID: 4454817131071477769, guid: 3ee274ff8b248444facb6707861bb086, type: 3}
+    <LocalPosition>k__BackingField: {x: 0, y: 0}
+    <RotationSpeed>k__BackingField: 10
+    <ReloadTime>k__BackingField: 3
+    <ProjectileConfig>k__BackingField:
+      <ProjectileView>k__BackingField: {fileID: 6050328295896178722, guid: 93cfceb3b9e2aeb4da42af88e74da4d1, type: 3}
+      <Damage>k__BackingField: 10
+      <Speed>k__BackingField: 1000

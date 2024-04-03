@@ -6,7 +6,7 @@ namespace Code.Combat.Projectile
     public class ProjectileView : MonoBehaviour
     {
         [field: SerializeField]
-        public PhysicObjectUpdater Body { get; private set; }
+        public PhysicObjectUpdater PhysicUpdater { get; private set; }
 
         [field: SerializeField]
         public ObjectActivator Activator { get; private set; }

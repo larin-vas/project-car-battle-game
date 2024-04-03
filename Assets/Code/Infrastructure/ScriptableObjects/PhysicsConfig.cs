@@ -3,7 +3,7 @@
 namespace Code.Infrastructure.ScriptableObjects
 {
 
-    [CreateAssetMenu(fileName = "New Physics Config", menuName = "Physics Config")]
+    [CreateAssetMenu(fileName = "New Physics Config", menuName = "Configs/Physics Config")]
     public class PhysicsConfig : ScriptableObject
     {
         [field: SerializeField, Min(0f)]

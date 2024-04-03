@@ -1,4 +1,3 @@
-using Code.Wheel;
 using System;
 using UnityEngine;
 
@@ -7,19 +6,13 @@ namespace Code.Combat.Projectile
     [Serializable]
     public class ProjectileConfig
     {
-        public ProjectileView ProjectileView => _projectileView;
+        [field: SerializeField]
+        public ProjectileView ProjectileView { get; private set; }
 
-        public float Damage => _damage;
+        [field: SerializeField, Min(0f)]
+        public float Damage { get; private set; }
 
-        public float Speed => _speed;
-
-        [SerializeField]
-        private ProjectileView _projectileView;
-
-        [SerializeField, Min(0f)]
-        private float _damage;
-
-        [SerializeField, Min(0f)]
-        private float _speed;
+        [field: SerializeField, Min(0f)]
+        public float Speed { get; private set; }
     }
 }

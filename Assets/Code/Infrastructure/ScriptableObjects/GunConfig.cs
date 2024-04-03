@@ -1,6 +1,5 @@
 using Code.Combat.Gun;
 using Code.Combat.Projectile;
-using Code.Wheel;
 using System;
 using UnityEngine;
 
@@ -9,29 +8,19 @@ namespace Code.Infrastructure.ScriptableObjects
     [Serializable]
     public class GunConfig
     {
-        public GunView GunView => _gunView;
+        [field: SerializeField]
+        public GunView GunView { get; private set; }
 
-        public Vector2 LocalPosition => _localPosition;
+        [field: SerializeField]
+        public Vector2 LocalPosition { get; private set; }
 
-        public float RotationSpeed => _rotationSpeed;
+        [field: SerializeField, Min(0f)]
+        public float RotationSpeed { get; private set; }
 
-        public float ReloadTime => _reloadTime;
+        [field: SerializeField, Min(0f)]
+        public float ReloadTime { get; private set; }
 
-        public ProjectileConfig ProjectileConfig => _projectileConfig;
-
-        [SerializeField]
-        private GunView _gunView;
-
-        [SerializeField]
-        private Vector2 _localPosition;
-
-        [SerializeField, Min(0f)]
-        private float _rotationSpeed;
-
-        [SerializeField, Min(0f)]
-        private float _reloadTime;
-
-        [SerializeField]
-        private ProjectileConfig _projectileConfig;
+        [field: SerializeField]
+        public ProjectileConfig ProjectileConfig { get; private set; }
     }
 }

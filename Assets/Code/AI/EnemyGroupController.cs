@@ -1,10 +1,8 @@
-using Code.AI.Pathfinding;
 using Code.Car;
 using Code.Infrastructure.Pools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using Zenject;
 

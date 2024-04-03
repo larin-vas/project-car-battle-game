@@ -16,11 +16,20 @@ namespace Code.Combat.Projectile
 
         public float Speed { get; }
 
-        public ProjectileModel(Transformation transformation, Observable<Vector2> force, Observable<float> damage, float speed) :
+        public ProjectileModel(
+            Transformation transformation, 
+            Observable<Vector2> force, 
+            Observable<float> damage, 
+            float speed) :
             this(transformation, force, Vector2.zero, damage, speed)
         { }
 
-        public ProjectileModel(Transformation transformation, Observable<Vector2> force, Vector2 direction, Observable<float> damage, float speed)
+        public ProjectileModel(
+            Transformation transformation, 
+            Observable<Vector2> force, 
+            Vector2 direction, 
+            Observable<float> damage, 
+            float speed)
         {
             if (damage.Value < 0f)
                 throw new ArgumentOutOfRangeException(nameof(damage));

@@ -30,11 +30,15 @@ namespace Code.Combat.Gun
 
         private float _reloadTimeRemaining;
 
-        public GunModel(Transformation transformation, Vector2 localPosition, float rotationSpeed, float reloadTime) :
+        public GunModel(
+            Transformation transformation, Vector2 localPosition,
+            float rotationSpeed, float reloadTime) :
             this(transformation, localPosition, rotationSpeed, reloadTime, 0f)
         { }
 
-        public GunModel(Transformation transformation, Vector2 localPosition, float rotationSpeed, float reloadTime, float reloadTimeRemaining)
+        public GunModel(
+            Transformation transformation, Vector2 localPosition, 
+            float rotationSpeed, float reloadTime, float reloadTimeRemaining)
         {
             if (reloadTime < 0f)
                 throw new ArgumentOutOfRangeException(nameof(reloadTime));

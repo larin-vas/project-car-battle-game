@@ -3,7 +3,7 @@
 namespace Code.Infrastructure.ScriptableObjects
 {
 
-    [CreateAssetMenu(fileName = "New Level Config", menuName = "Level Config")]
+    [CreateAssetMenu(fileName = "New Level Config", menuName = "Configs/Level Config")]
     public class LevelConfig : ScriptableObject
     {
         [field: SerializeField]

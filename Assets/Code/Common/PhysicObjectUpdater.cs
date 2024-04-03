@@ -1,6 +1,5 @@
 using Code.Common;
 using Code.Physics;
-using System;
 using UnityEngine;
 
 public class PhysicObjectUpdater : MonoBehaviour, IPhysicObject

@@ -67,8 +67,10 @@ public class MapUpdater : MonoBehaviour, IPhysicObject
 
         if (_visualizedTileTypes.Contains(newTile.Type))
             _tilemap.SetTile((Vector3Int)newTile.Position, newTile.ObjectTile);
+
         else if (_visualizedTileTypes.Contains(TileType.Ground))
             _tilemap.SetTile((Vector3Int)newTile.Position, newTile.GroundTile);
+
         else
             _tilemap.SetTile((Vector3Int)newTile.Position, null);
 

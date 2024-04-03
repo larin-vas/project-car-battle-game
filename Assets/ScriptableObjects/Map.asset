@@ -12,25 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268968e37d2b6d845b7e7419c22bf995, type: 3}
   m_Name: Map
   m_EditorClassIdentifier: 
-  _mapView: {fileID: 5378177008327043644, guid: 3875beac56ce5fb459a788cebd0fb638, type: 3}
-  _mapBootstrap: 2
-  _useConfigSeed: 0
-  _seed: 0
-  _width: 100
-  _height: 100
-  _mapScale: 10
-  _borderWidth: 2
-  _drag: 5000
-  _hillsRatio: 0.4
-  _groundTileConfig:
-    _objectTile: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
-    _groundTile: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
-    _type: 0
-    _elasticityRate: 0
-    _frictionRate: 0
-  _hillTileConfig:
-    _objectTile: {fileID: 11400000, guid: 37ca472e56cebf142a2600eed0e82424, type: 2}
-    _groundTile: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
-    _type: 1
-    _elasticityRate: 0
-    _frictionRate: 0
+  <MapView>k__BackingField: {fileID: 5378177008327043644, guid: 3875beac56ce5fb459a788cebd0fb638, type: 3}
+  <BootstrapType>k__BackingField: 2
+  <UseConfigSeed>k__BackingField: 0
+  <Seed>k__BackingField: 0
+  <Width>k__BackingField: 100
+  <Height>k__BackingField: 100
+  <MapScale>k__BackingField: 10
+  <BorderWidth>k__BackingField: 2
+  <Drag>k__BackingField: 5000
+  <HillsRatio>k__BackingField: 0.4
+  <GroundTileConfig>k__BackingField:
+    <ObjectTile>k__BackingField: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
+    <GroundTile>k__BackingField: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
+    <Type>k__BackingField: 0
+    <ElasticityRate>k__BackingField: 0
+    <FrictionRate>k__BackingField: 0.5
+  <HillTileConfig>k__BackingField:
+    <ObjectTile>k__BackingField: {fileID: 11400000, guid: 37ca472e56cebf142a2600eed0e82424, type: 2}
+    <GroundTile>k__BackingField: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
+    <Type>k__BackingField: 1
+    <ElasticityRate>k__BackingField: 0.5
+    <FrictionRate>k__BackingField: 0.5

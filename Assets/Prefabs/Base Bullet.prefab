@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceaa8a8f65ccded4885ce5d28e2fde3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Body>k__BackingField: {fileID: 175785435509227948}
+  <PhysicUpdater>k__BackingField: {fileID: 175785435509227948}
   <Activator>k__BackingField: {fileID: 7011350939887628318}
   <Collider>k__BackingField: {fileID: 463953026117916085}
 --- !u!114 &175785435509227948

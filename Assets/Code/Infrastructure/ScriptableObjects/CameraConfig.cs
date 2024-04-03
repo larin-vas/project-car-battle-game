@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Code.Infrastructure.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "New Game Camera", menuName = "Game Camera")]
+    [CreateAssetMenu(fileName = "New Game Camera", menuName = "Configs/Game Camera")]
     public class CameraConfig : ScriptableObject
     {
         [field: SerializeField]

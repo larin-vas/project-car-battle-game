@@ -5,54 +5,34 @@ using UnityEngine;
 
 namespace Code.Infrastructure.ScriptableObjects
 {
-
-    [CreateAssetMenu(fileName = "New Car", menuName = "Car")]
+    [CreateAssetMenu(fileName = "New Car", menuName = "Configs/Car")]
     public class CarConfig : ScriptableObject
     {
-        public CarView CarView => _carView;
+        [field: SerializeField]
+        public CarView CarView { get; private set; }
 
-        public float CollisionDamage => _collisionDamage;
+        [field: SerializeField, Min(0f)]
+        public float CollisionDamage { get; private set; }
 
-        public float MaxHealthPoints => _maxHealthPoints;
+        [field: SerializeField, Min(0f)]
+        public float MaxHealthPoints { get; private set; }
 
-        public float MaxAcceleration => _maxAcceleration;
+        [field: SerializeField, Min(0f)]
+        public float MaxAcceleration { get; private set; }
 
-        public float AccelerationRate => _accelerationRate;
+        [field: SerializeField, Min(0f)]
+        public float AccelerationRate { get; private set; }
 
-        public Vector2 MassCenterPosition => _massCenterPosition;
+        [field: SerializeField]
+        public Vector2 MassCenterPosition { get; private set; }
 
-        public float Mass => _mass;
+        [field: SerializeField, Min(0f)]
+        public float Mass { get; private set; }
 
-        public IReadOnlyList<WheelConfig> Wheels => _whees;
+        [field: SerializeField]
+        public List<WheelConfig> Wheels { get; private set; }
 
-        public IReadOnlyList<GunConfig> Guns => _guns;
-
-
-        [SerializeField]
-        private CarView _carView;
-
-        [SerializeField, Min(0f)]
-        private float _collisionDamage;
-
-        [SerializeField, Min(0f)]
-        private float _maxHealthPoints;
-
-        [SerializeField, Min(0f)]
-        private float _maxAcceleration;
-
-        [SerializeField, Min(0f)]
-        private float _accelerationRate;
-
-        [SerializeField]
-        private Vector2 _massCenterPosition;
-
-        [SerializeField, Min(0f)]
-        private float _mass;
-
-        [SerializeField]
-        private List<WheelConfig> _whees;
-
-        [SerializeField]
-        private List<GunConfig> _guns;
+        [field: SerializeField]
+        public List<GunConfig> Guns { get; private set; }
     }
 }

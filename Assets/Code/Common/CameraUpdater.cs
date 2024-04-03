@@ -4,6 +4,7 @@ using UnityEngine;
 public class CameraUpdater : MonoBehaviour
 {
     private Transformation _transformation;
+
     private Observable<float> _height;
 
     public void Construct(Transformation transformation, Observable<float> height)

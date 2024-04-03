@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Zenject;
 
 namespace Code.Combat
 {

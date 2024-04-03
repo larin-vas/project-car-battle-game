@@ -7,29 +7,19 @@ namespace Code.Map.Tile
     [Serializable]
     public class TileConfig
     {
-        public TileBase ObjectTile => _objectTile;
+        [field: SerializeField]
+        public TileBase ObjectTile { get; private set; }
 
-        public TileBase GroundTile => _groundTile;
+        [field: SerializeField]
+        public TileBase GroundTile { get; private set; }
 
-        public TileType Type => _type;
+        [field: SerializeField]
+        public TileType Type { get; private set; }
 
-        public float ElasticityRate => _elasticityRate;
-        public float FrictionRate => _frictionRate;
+        [field: SerializeField, Range(0f, 1f)]
+        public float ElasticityRate { get; private set; }
 
-
-        [SerializeField]
-        private TileBase _objectTile;
-
-        [SerializeField]
-        private TileBase _groundTile;
-
-        [SerializeField]
-        private TileType _type;
-
-        [SerializeField, Range(0f, 1f)]
-        private float _elasticityRate;
-
-        [SerializeField, Range(0f, 1f)]
-        private float _frictionRate;
+        [field: SerializeField, Range(0f, 1f)]
+        public float FrictionRate { get; private set; }
     }
 }

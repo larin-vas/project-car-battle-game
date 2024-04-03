@@ -6,43 +6,28 @@ namespace Code.Wheel
     [Serializable]
     public class WheelConfig
     {
-        public WheelView WheelView => _wheelView;
+        [field: SerializeField]
+        public WheelView WheelView { get; private set; }
 
-        public Vector2 LocalPosition => _localPosition;
+        [field: SerializeField]
+        public Vector2 LocalPosition { get; private set; }
 
-        public WheelAlignment Alignment => _alignment;
+        [field: SerializeField]
+        public WheelAlignment Alignment { get; private set; }
 
-        public float MinRotationAngle => _minRotationAngle;
-        public float MaxRotationAngle => _maxRotationAngle;
+        [field: SerializeField, Range(0f, 360f)]
+        public float MinRotationAngle { get; private set; }
 
-        public float RotationSpeed => _rotationSpeed;
+        [field: SerializeField, Range(0f, 360f)]
+        public float MaxRotationAngle { get; private set; }
 
-        public bool IsDriveWheel => _isDriveWheel;
+        [field: SerializeField, Min(0f)]
+        public float RotationSpeed { get; private set; }
 
-        public bool IsLockedOnHandbrake => _isLockedOnHandbrake;
+        [field: SerializeField]
+        public bool IsDriveWheel { get; private set; }
 
-
-        [SerializeField]
-        private WheelView _wheelView;
-
-        [SerializeField]
-        private Vector2 _localPosition;
-
-        [SerializeField]
-        private WheelAlignment _alignment;
-
-        [SerializeField, Range(0f, 360f)]
-        private float _minRotationAngle;
-        [SerializeField, Range(0f, 360f)]
-        private float _maxRotationAngle;
-
-        [SerializeField, Min(0f)]
-        private float _rotationSpeed;
-
-        [SerializeField]
-        private bool _isDriveWheel;
-
-        [SerializeField]
-        private bool _isLockedOnHandbrake;
+        [field: SerializeField]
+        public bool IsLockedOnHandbrake { get; private set; }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Code.Infrastructure.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "New Player Input Config", menuName = "Player Input Config")]
+    [CreateAssetMenu(fileName = "New Player Input Config", menuName = "Configs/Player Input Config")]
     public class PlayerInputConfig : ScriptableObject
     {
         [field: SerializeField, Header("Transport Controls")]

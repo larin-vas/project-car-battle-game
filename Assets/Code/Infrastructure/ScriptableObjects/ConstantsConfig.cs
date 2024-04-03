@@ -3,7 +3,7 @@
 namespace Code.Infrastructure.ScriptableObjects
 {
 
-    [CreateAssetMenu(fileName = "New Constants Config", menuName = "Constants Config")]
+    [CreateAssetMenu(fileName = "New Constants Config", menuName = "Configs/Constants Config")]
     public class ConstantsConfig : ScriptableObject
     {
         [field: SerializeField, Min(0)]
