@@ -3,6 +3,7 @@ using Code.Map;
 using Code.Map.Tile;
 using Code.Services;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace Code.AI.Pathfinding
@@ -27,15 +28,15 @@ namespace Code.AI.Pathfinding
 
         public IReadOnlyList<Vector2Int> FindPath(Vector2Int start, Vector2Int target)
         {
-            if (_map[target.x, target.y].Value.Type != TileType.Ground)
+            if (!IsCoordinatePassable(start) ||
+                !IsCoordinatePassable(target))
                 return null;
-
-            List<Vector2Int> path = new List<Vector2Int>();
 
             HashSet<Vector2Int> closedSet = new HashSet<Vector2Int>();
             SortedSet<PathNode> openSet = new SortedSet<PathNode>();
 
-            openSet.Add(new PathNode(start, 0, Heuristic(start, target), null));
+            PathNode startNode = new PathNode(start, 0, CalculateDistance(start, target), null);
+            openSet.Add(startNode);
 
             while (openSet.Count > 0)
             {
@@ -43,32 +44,21 @@ namespace Code.AI.Pathfinding
                 openSet.Remove(currentNode);
 
                 if (currentNode.Position == target)
-                {
-                    // Построение пути
-                    while (currentNode != null)
-                    {
-                        path.Add(currentNode.Position);
-                        currentNode = currentNode.Parent;
-                    }
-                    path.Reverse();
-                    return path;
-                }
+                    return BuildPath(currentNode);
 
                 closedSet.Add(currentNode.Position);
 
                 foreach (Vector2Int neighbor in GetNeighbors(currentNode.Position))
                 {
-                    if (_map[neighbor.x, neighbor.y].Value.Type != TileType.Ground || closedSet.Contains(neighbor))
+                    if (!IsCoordinatePassable(neighbor) || closedSet.Contains(neighbor))
                         continue;
 
-                    float newCost = currentNode.GCost + Heuristic(currentNode.Position, neighbor);
+                    float newCost = currentNode.GCost + CalculateDistance(currentNode.Position, neighbor);
 
-                    PathNode neighborNode = new PathNode(neighbor, newCost, Heuristic(neighbor, target), currentNode);
+                    PathNode neighborNode = new PathNode(neighbor, newCost, CalculateDistance(neighbor, target), currentNode);
 
                     if (!openSet.Contains(neighborNode) || newCost < neighborNode.GCost)
-                    {
                         openSet.Add(neighborNode);
-                    }
                 }
             }
 
@@ -83,19 +73,41 @@ namespace Code.AI.Pathfinding
             {
                 Vector2Int neighborPosition = position + direction;
 
-                if (neighborPosition.x >= 0 && neighborPosition.x < _map.GetLength(0) &&
-                    neighborPosition.y >= 0 && neighborPosition.y < _map.GetLength(1))
-                {
+                if (IsCoordinateCorrect(neighborPosition))
                     neighbors.Add(neighborPosition);
-                }
             }
 
             return neighbors;
         }
 
-        private float Heuristic(Vector2Int a, Vector2Int b)
+        private bool IsCoordinatePassable(Vector2Int position)
+        {
+            return _map[position.x, position.y].Value.Type == TileType.Ground;
+        }
+
+        private bool IsCoordinateCorrect(Vector2Int position)
+        {
+            return position.x >= 0 && position.x < _map.GetLength(0) &&
+                   position.y >= 0 && position.y < _map.GetLength(1);
+        }
+
+        private float CalculateDistance(Vector2Int a, Vector2Int b)
         {
             return (a - b).magnitude;
+        }
+
+        private List<Vector2Int> BuildPath(PathNode currentNode)
+        {
+            List<Vector2Int> path = new List<Vector2Int>();
+
+            while (currentNode != null)
+            {
+                path.Add(currentNode.Position);
+                currentNode = currentNode.Parent;
+            }
+
+            path.Reverse();
+            return path;
         }
     }
 }
