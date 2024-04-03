@@ -2,19 +2,22 @@ using Code.Infrastructure.ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
-public class BaseConfigurationsInstaller : MonoInstaller
+namespace Code.Installers
 {
-    [SerializeField]
-    private PhysicsConfig _physicsConfig;
-
-    [SerializeField]
-    private ConstantsConfig _constantsConfig;
-
-    public override void InstallBindings()
+    public class BaseConfigurationsInstaller : MonoInstaller
     {
-        Container.BindInterfacesAndSelfTo<PhysicsConfig>().FromInstance(_physicsConfig).AsSingle();
+        [SerializeField]
+        private PhysicsConfig _physicsConfig;
 
-        Container.BindInterfacesAndSelfTo<ConstantsConfig>().FromInstance(_constantsConfig).AsSingle();
+        [SerializeField]
+        private ConstantsConfig _constantsConfig;
+
+        public override void InstallBindings()
+        {
+            Container.BindInterfacesAndSelfTo<PhysicsConfig>().FromInstance(_physicsConfig).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<ConstantsConfig>().FromInstance(_constantsConfig).AsSingle();
+        }
+
     }
-
 }

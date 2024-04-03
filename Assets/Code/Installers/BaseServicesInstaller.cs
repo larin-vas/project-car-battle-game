@@ -2,12 +2,15 @@ using Code.Physics;
 using Code.Services;
 using Zenject;
 
-public class BaseServicesInstaller : MonoInstaller
+namespace Code.Installers
 {
-    public override void InstallBindings()
+    public class BaseServicesInstaller : MonoInstaller
     {
-        Container.BindInterfacesAndSelfTo<PhysicsService>().AsSingle();
+        public override void InstallBindings()
+        {
+            Container.BindInterfacesAndSelfTo<PhysicsService>().AsSingle();
 
-        Container.BindInterfacesAndSelfTo<ConstantsService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConstantsService>().AsSingle();
+        }
     }
 }

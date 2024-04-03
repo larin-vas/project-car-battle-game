@@ -21,12 +21,12 @@ namespace Assets.Code.Transport.Car.CarHealth
 
         public void Enable()
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public void Disable()
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public float GetCurrentHealth()
