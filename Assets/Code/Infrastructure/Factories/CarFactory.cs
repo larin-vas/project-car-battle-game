@@ -19,6 +19,8 @@ namespace Code.Infrastructure.Factories
     {
         private readonly ConstantsService _constants;
 
+        private readonly PhysicsService _physicsService;
+
         private readonly IMovableInput _input;
 
         private readonly IFactory<Transform, WheelConfig, WheelController> _wheelFactory;
@@ -26,11 +28,14 @@ namespace Code.Infrastructure.Factories
 
         public CarFactory(
             ConstantsService constants,
+            PhysicsService physicsService,
             IMovableInput input,
             IFactory<Transform, WheelConfig, WheelController> wheelFactory,
             IFactory<CarView, GunConfig, GunController> gunFactory)
         {
             _constants = constants;
+
+            _physicsService = physicsService;
 
             _input = input;
 
@@ -60,7 +65,7 @@ namespace Code.Infrastructure.Factories
 
             CollisionTrigger collisionTrigger = new CollisionTrigger(_constants, view.Collider);
 
-            CarMovementController movementController = new CarMovementController(_input, null, movementModel, view, collisionTrigger);
+            CarMovementController movementController = new CarMovementController(_input, _physicsService, movementModel, view, collisionTrigger);
 
             CarHealthController healthController = CreateHealthController(config, collisionTrigger);
 
