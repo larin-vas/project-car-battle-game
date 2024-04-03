@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5790278761a144a93a71c06bbe58fe, type: 3}
   m_Name: Physics Config
   m_EditorClassIdentifier: 
-  <RotationSpeed>k__BackingField: 0
-  <MaxMassCenterDeviation>k__BackingField: 0
-  <AccelerationDecayRate>k__BackingField: 0
+  <RotationSpeed>k__BackingField: 30
+  <MaxMassCenterDeviation>k__BackingField: 0.3
+  <AccelerationDecayRate>k__BackingField: 10
