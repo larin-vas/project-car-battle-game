@@ -31,9 +31,6 @@ namespace Code.Infrastructure.ScriptableObjects
         [field: SerializeField, Min(1)]
         public int BorderWidth { get; private set; }
 
-        [field: SerializeField, Min(0f)]
-        public float Drag { get; private set; }
-
         [field: SerializeField, Range(0f, 1f)]
         public float HillsRatio { get; private set; }
 

@@ -66,7 +66,12 @@ namespace Code.Physics
                 ColliderDistance2D distance = _collider.Distance(collider);
 
                 if (collider.TryGetComponent(out IPhysicObject transformableObject))
-                    collisions.Add(new CollisionInfo(distance.pointA, transformableObject.Force, transformableObject.CollisionDamage));
+                {
+                    CollisionInfo collision = 
+                        new CollisionInfo(distance.pointA, transformableObject.Force, transformableObject.CollisionDamage);
+
+                    collisions.Add(collision);
+                }
             }
 
             return collisions;

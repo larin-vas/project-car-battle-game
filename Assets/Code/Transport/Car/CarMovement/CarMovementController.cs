@@ -6,6 +6,7 @@ using UnityEngine;
 using Code.Common.AbstractClasses;
 using Code.Common.Interfaces;
 using Zenject;
+using Code.Map;
 
 namespace Code.Transport.Car.CarMovement
 {
@@ -14,6 +15,7 @@ namespace Code.Transport.Car.CarMovement
         private IMovableInput _input;
 
         private readonly PhysicsService _physics;
+        private readonly IWorldProperties _worldProperties;
 
         private readonly CarMovementModel _model;
         private readonly ITransportView _view;
@@ -25,6 +27,7 @@ namespace Code.Transport.Car.CarMovement
         public CarMovementController(
             IMovableInput input,
             PhysicsService physics,
+            IWorldProperties worldProperties,
             CarMovementModel model,
             ITransportView view,
             ICollisionTrigger collisionTrigger)
@@ -32,6 +35,7 @@ namespace Code.Transport.Car.CarMovement
             _input = input;
 
             _physics = physics;
+            _worldProperties = worldProperties;
 
             _model = model;
             _view = view;
@@ -116,7 +120,7 @@ namespace Code.Transport.Car.CarMovement
 
             newAcceleration = Mathf.Clamp(newAcceleration, 0f, _model.MaxAcceleration);
 
-            // Сбрасываем текущее ускорение, если нажата кнопка тормоза или ручного тормоза
+            // Reset the current acceleration if the brake or handbrake button is pressed
             if (_input.Brake || _input.Handbrake)
                 newAcceleration = 0f;
 
@@ -171,7 +175,7 @@ namespace Code.Transport.Car.CarMovement
                     totalForce = -totalForce * elasticityRate;
             }
 
-            totalForce = totalForce.normalized * Mathf.Abs(totalForce.magnitude - totalForce.magnitude * totalForce.magnitude / 5000f);
+            totalForce = ApplyAirResistance(totalForce);
 
             return totalForce;
         }
@@ -197,6 +201,11 @@ namespace Code.Transport.Car.CarMovement
             }
 
             return totalTorque;
+        }
+
+        private Vector2 ApplyAirResistance(Vector2 force)
+        {
+            return force.normalized * Mathf.Abs(force.magnitude - force.magnitude * force.magnitude / _worldProperties.GetAirResistanceByPosition(Vector2Int.CeilToInt(GetPosition())));
         }
 
         private void RotateAroundPoint(Vector2 rotationCenter, Quaternion newRotation)

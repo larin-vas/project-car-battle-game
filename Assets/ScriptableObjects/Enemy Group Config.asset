@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxEnemies>k__BackingField: 1
   <AttackRange>k__BackingField: 5
-  <PathSegmentIndexAsTarget>k__BackingField: 1
+  <PathSegmentIndexAsTarget>k__BackingField: 0
   <SpawnPoints>k__BackingField:
   - {x: 30, y: 30}
   - {x: 30, y: 70}

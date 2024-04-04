@@ -30,15 +30,8 @@ public class GameSceneInstaller : MonoInstaller
     [field: SerializeField]
     public PlayerInput PlayerInput { get; private set; }
 
-    //[field: SerializeField]
-    //public PlayerInputConfig InputData { get; private set; }
-
     public override void InstallBindings()
     {
-        //Container.Bind<PlayerInput>().FromInstance(PlayerInput).AsSingle();
-
-        //Container.BindInterfacesAndSelfTo<PlayerInputConfig>().FromInstance(InputData).AsSingle();
-
         Container.BindInterfacesAndSelfTo<MapConfig>().FromInstance(MapData).AsSingle();
 
         Container.BindInterfacesAndSelfTo<LevelConfig>().FromInstance(LevelData).AsSingle();
@@ -51,7 +44,10 @@ public class GameSceneInstaller : MonoInstaller
 
         Container.Bind<CarConfig>().WithId("Enemy").FromInstance(EnemyCarData);
 
-        Container.BindInterfacesAndSelfTo<MainPlayerInput>().AsSingle();
+        Container.BindInterfacesAndSelfTo<TileModelFactory>().AsSingle();
+
+        Container.Bind<MapController>().FromFactory<MapFactory>().AsSingle();
+        Container.Bind<IWorldProperties>().To<MapController>().FromResolve();
 
         Container.BindInterfacesAndSelfTo<CameraFactory>().AsSingle();
 
@@ -62,10 +58,6 @@ public class GameSceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<CarFactory>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<EnemyGroupFactory>().AsSingle();
-
-        Container.BindInterfacesAndSelfTo<TileModelFactory>().AsSingle();
-
-        Container.Bind<MapController>().FromFactory<MapFactory>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<AStarPathfinder>().AsSingle();
 

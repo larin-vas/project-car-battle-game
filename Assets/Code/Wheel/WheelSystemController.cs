@@ -1,9 +1,9 @@
 using Code.Transport.Car.CarMovement;
 using Code.Physics.Force;
-using Code.Transport;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
+using Code.Map;
+using Code.Services;
 
 namespace Code.Wheel
 {
@@ -11,17 +11,29 @@ namespace Code.Wheel
     {
         private IMovableInput _input;
 
+        private readonly ConstantsService _constants;
+
+        private readonly IWorldProperties _worldProperties;
+
         private readonly CarMovementModel _transportModel;
 
         private readonly ICollection<WheelController> _wheels;
 
         public WheelSystemController(
             IMovableInput input,
+            ConstantsService constants,
+            IWorldProperties worldProperties,
             CarMovementModel carModel,
             ICollection<WheelController> wheels)
         {
             _input = input;
+
+            _constants = constants;
+
+            _worldProperties = worldProperties;
+
             _transportModel = carModel;
+
             _wheels = wheels;
         }
 
@@ -113,17 +125,27 @@ namespace Code.Wheel
         {
             float baseDistance = (wheel.GetPosition() - CalculateCarCenter()).magnitude;
             float currentDistance = (wheel.GetPosition() - _transportModel.CurrentMassCenter).magnitude;
+
             float Coefficient = 1f / (1f + Mathf.Exp(-_transportModel.Mass * (currentDistance - baseDistance)));
-            return 0.05f + Coefficient * 0.795f;
+
+            float friction = _worldProperties.GetFrictionByPosition(Vector2Int.CeilToInt(wheel.GetPosition()));
+
+            float baseWheelSliding =
+                _constants.MinWheelSlidingCoefficient +
+                Coefficient * (_constants.MaxWheelSlidingCoefficient - _constants.MinWheelSlidingCoefficient);
+
+            return baseWheelSliding * friction;
         }
 
         private Vector2 CalculateCarCenter()
         {
             Vector2 carCenter = Vector2.zero;
+
             foreach (WheelController wheel in _wheels)
             {
                 carCenter += wheel.GetPosition();
             }
+
             return carCenter / _wheels.Count;
         }
 
@@ -156,19 +178,24 @@ namespace Code.Wheel
 
         private float CalculateInertiaReductionCoefficient(WheelController wheel)
         {
-            Vector3 rotationInertiaToWheel = Quaternion.FromToRotation(_transportModel.InertiaVector.Value, wheel.GetRotation() * Vector3.up).eulerAngles;
+            Vector3 rotationInertiaToWheel =
+                Quaternion.FromToRotation(_transportModel.InertiaVector.Value, wheel.GetRotation() * Vector3.up).eulerAngles;
+
             float angle = (rotationInertiaToWheel.y != 0) ? rotationInertiaToWheel.y : rotationInertiaToWheel.z;
+
             return Mathf.Cos(angle * Mathf.Deg2Rad);
         }
 
         private float CalculateInertiaSeparationCoefficient()
         {
             float sum = 0f;
+
             foreach (WheelController wheel in _wheels)
             {
                 float inertiaReductionCoefficient = CalculateInertiaReductionCoefficient(wheel);
                 float brakeCoefficient = (_input.Brake) ? 0f : 1f;
                 float handbrakeCoefficient = (wheel.IsLockedOnHandbrake() && _input.Handbrake) ? 0f : 1f;
+
                 sum +=
                     inertiaReductionCoefficient * inertiaReductionCoefficient * brakeCoefficient * handbrakeCoefficient +
                     CalculateWheelSlidingCoefficient(wheel);

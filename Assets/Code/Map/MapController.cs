@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Code.Map
 {
-    public class MapController : ITickable
+    public class MapController : IWorldProperties, ITickable
     {
         private readonly MapModel _model;
         private readonly MapView _view;
@@ -54,9 +54,9 @@ namespace Code.Map
             return _model.Map[position.x, position.y].Value.FrictionRate;
         }
 
-        public float GetFrictionByPosition(Vector2Int position)
+        public float GetAirResistanceByPosition(Vector2Int position)
         {
-            return _model.Map[position.x, position.y].Value.FrictionRate;
+            return _model.Map[position.x, position.y].Value.AirResistance;
         }
 
         public void SetSeed(int seed)

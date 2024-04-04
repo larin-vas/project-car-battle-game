@@ -38,7 +38,7 @@ public class MapUpdater : MonoBehaviour, IPhysicObject
     private void OnEnable()
     {
         Force = Vector2.zero;
-        CollisionDamage = 1f;
+        CollisionDamage = 0f;
 
         if (_map == null)
             return;

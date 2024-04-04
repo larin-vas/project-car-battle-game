@@ -1,4 +1,5 @@
 using Code.Common.Interfaces;
+using Code.Map;
 using UnityEngine;
 using Zenject;
 
@@ -11,9 +12,12 @@ namespace Code.Wheel
         private readonly WheelModel _model;
         private readonly WheelView _view;
 
-        public WheelController(IMovableInput input, WheelModel model, WheelView view)
+        public WheelController(
+            IMovableInput input,
+            WheelModel model, WheelView view)
         {
             _input = input;
+
             _model = model;
             _view = view;
         }

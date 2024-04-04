@@ -21,6 +21,8 @@ namespace Code.Infrastructure.Factories
 
         private readonly PhysicsService _physicsService;
 
+        private readonly IWorldProperties _worldProperties;
+
         private readonly IMovableInput _input;
 
         private readonly IFactory<Transform, WheelConfig, WheelController> _wheelFactory;
@@ -29,6 +31,7 @@ namespace Code.Infrastructure.Factories
         public CarFactory(
             ConstantsService constants,
             PhysicsService physicsService,
+            IWorldProperties worldProperties,
             IMovableInput input,
             IFactory<Transform, WheelConfig, WheelController> wheelFactory,
             IFactory<CarView, GunConfig, GunController> gunFactory)
@@ -36,6 +39,8 @@ namespace Code.Infrastructure.Factories
             _constants = constants;
 
             _physicsService = physicsService;
+
+            _worldProperties = worldProperties;
 
             _input = input;
 
@@ -65,7 +70,7 @@ namespace Code.Infrastructure.Factories
 
             CollisionTrigger collisionTrigger = new CollisionTrigger(_constants, view.Collider);
 
-            CarMovementController movementController = new CarMovementController(_input, _physicsService, movementModel, view, collisionTrigger);
+            CarMovementController movementController = new CarMovementController(_input, _physicsService, _worldProperties, movementModel, view, collisionTrigger);
 
             CarHealthController healthController = CreateHealthController(config, collisionTrigger);
 
@@ -92,7 +97,7 @@ namespace Code.Infrastructure.Factories
                 wheelControllers.Add(_wheelFactory.Create(wheelsParent, wheelConfig));
             }
 
-            return new WheelSystemController(_input, movementModel, wheelControllers);
+            return new WheelSystemController(_input, _constants, _worldProperties, movementModel, wheelControllers);
         }
 
         private WeaponSystemController CreateWeaponSystem(CarConfig config, CarView carView)

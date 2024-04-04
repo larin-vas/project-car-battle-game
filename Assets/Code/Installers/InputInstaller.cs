@@ -5,6 +5,7 @@ using Zenject;
 
 namespace Code.Installers
 {
+    [RequireComponent(typeof(PlayerInput))]
     public class InputInstaller : MonoInstaller
     {
         [SerializeField]
@@ -18,6 +19,8 @@ namespace Code.Installers
             Container.BindInterfacesAndSelfTo<PlayerInputConfig>().FromInstance(_inputConfig).AsSingle();
 
             Container.Bind<PlayerInput>().FromInstance(_playerInput).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<MainPlayerInput>().AsSingle();
         }
     }
 }

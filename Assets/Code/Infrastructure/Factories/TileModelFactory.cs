@@ -16,10 +16,9 @@ namespace Code.Infrastructure.Factories
 
         public TileModel Create(Vector2Int position, TileConfig config)
         {
-            if (config.Type == TileType.Ground)
-                return new TileModel(config.ObjectTile, config.GroundTile, position, config.Type, config.FrictionRate);
-            else
-                return new TileModel(config.ObjectTile, config.GroundTile, position, config.Type, config.ElasticityRate);
+            return new TileModel(
+                config.ObjectTile, config.GroundTile,
+                position, config.Type, config.AirResistance, config.ElasticityRate);
         }
     }
 }
