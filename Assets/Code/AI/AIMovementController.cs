@@ -68,7 +68,7 @@ namespace Code.AI
 
             IReadOnlyList<Vector2Int> path = _pathfinder.FindPath(controlledObjectPosition, targetPosition);
 
-            if (path != null && path.Count >= _model.PathSegmentIndex)
+            if (path != null && path.Count > _model.PathSegmentIndex)
             {
                 Vector2 moveDirection = (path[_model.PathSegmentIndex] - controlledObject.GetPosition()).normalized;
 

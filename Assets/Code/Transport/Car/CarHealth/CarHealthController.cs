@@ -3,7 +3,7 @@ using Code.Physics;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Code.Transport.Car.CarHealth
+namespace Code.Transport.Car.CarHealth
 {
     public class CarHealthController : IActivatable, IHealthProvider, ITickable
     {

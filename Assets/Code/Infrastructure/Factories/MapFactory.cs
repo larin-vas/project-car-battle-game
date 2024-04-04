@@ -45,7 +45,6 @@ namespace Code.Infrastructure.Factories
                 _config.HillsRatio, _config.BorderWidth);
 
             MapGenerator generator = new MapGenerator(model, _tileFactory, _config.GroundTileConfig, _config.HillTileConfig);
-            //generator.Generate();
 
             groundMap.Construct(model.Map);
             hillMap.Construct(model.Map);

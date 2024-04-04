@@ -8,8 +8,8 @@ using Code.Infrastructure.ScriptableObjects;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using Assets.Code.Transport.Car.CarMovement;
-using Assets.Code.Transport.Car.CarHealth;
+using Code.Transport.Car.CarMovement;
+using Code.Transport.Car.CarHealth;
 using Code.Map;
 using Code.Services;
 

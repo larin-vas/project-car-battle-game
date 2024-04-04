@@ -1,5 +1,5 @@
-using Assets.Code.Transport.Car.CarHealth;
-using Assets.Code.Transport.Car.CarMovement;
+using Code.Transport.Car.CarHealth;
+using Code.Transport.Car.CarMovement;
 using Code.Car;
 using Code.Combat;
 using Code.Physics.Force;
@@ -89,6 +89,9 @@ namespace Code.Transport.Car
         public override void Tick()
         {
             // Update the wheel system
+            _wheelSystem.SetRotation(GetRotation());
+            _wheelSystem.SetPosition(GetPosition());
+
             _wheelSystem.Tick();
 
             // Update movement controller

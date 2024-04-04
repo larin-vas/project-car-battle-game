@@ -5,7 +5,7 @@ using Code.Transport.Car;
 using Code.Infrastructure.ScriptableObjects;
 using Zenject;
 using Code.Level.States;
-using Assets.Code.Infrastructure.StateMachine;
+using Code.Infrastructure.StateMachine;
 using Code.Common.Interfaces;
 
 namespace Code.Level

@@ -44,6 +44,21 @@ namespace Code.Map
             return _model.Map;
         }
 
+        public float GetElasticityByPosition(Vector2Int position)
+        {
+            return _model.Map[position.x, position.y].Value.ElasticityRate;
+        }
+
+        public float GetFrictionByPosition(Vector2Int position)
+        {
+            return _model.Map[position.x, position.y].Value.FrictionRate;
+        }
+
+        public float GetFrictionByPosition(Vector2Int position)
+        {
+            return _model.Map[position.x, position.y].Value.FrictionRate;
+        }
+
         public void SetSeed(int seed)
         {
             _model.Seed = seed;

@@ -1,4 +1,4 @@
-using Assets.Code.Infrastructure.StateMachine;
+using Code.Infrastructure.StateMachine;
 using UnityEngine;
 using Code.GameCamera;
 using Code.Map;

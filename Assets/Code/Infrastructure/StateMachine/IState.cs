@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace Assets.Code.Infrastructure.StateMachine
+namespace Code.Infrastructure.StateMachine
 {
     public interface IState : ITickable
     {

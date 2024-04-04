@@ -1,4 +1,4 @@
-using Assets.Code.Transport.Car.CarMovement;
+using Code.Transport.Car.CarMovement;
 using Code.Physics.Force;
 using Code.Transport;
 using System.Collections.Generic;
@@ -66,6 +66,11 @@ namespace Code.Wheel
         public void SetInput(IMovableInput input)
         {
             _input = input;
+
+            foreach (WheelController wheel in _wheels)
+            {
+                wheel.SetInput(input);
+            }
         }
 
         public Vector2 CalculateRotationCenter()

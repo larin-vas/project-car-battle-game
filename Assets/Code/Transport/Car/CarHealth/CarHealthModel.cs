@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Code.Transport.Car.CarHealth
+namespace Code.Transport.Car.CarHealth
 {
     public class CarHealthModel
     {

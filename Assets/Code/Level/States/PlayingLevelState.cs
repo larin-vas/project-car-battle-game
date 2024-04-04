@@ -1,4 +1,4 @@
-using Assets.Code.Infrastructure.StateMachine;
+using Code.Infrastructure.StateMachine;
 using Code.AI;
 using Zenject;
 using Code.GameCamera;

@@ -7,7 +7,7 @@ using Code.Common.AbstractClasses;
 using Code.Common.Interfaces;
 using Zenject;
 
-namespace Assets.Code.Transport.Car.CarMovement
+namespace Code.Transport.Car.CarMovement
 {
     public class CarMovementController : ForceMovable, IActivatable, ITickable
     {

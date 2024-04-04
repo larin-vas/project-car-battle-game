@@ -2,7 +2,7 @@
 using Code.Common;
 using System;
 
-namespace Assets.Code.Transport.Car.CarMovement
+namespace Code.Transport.Car.CarMovement
 {
     public class CarMovementModel
     {

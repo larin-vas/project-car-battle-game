@@ -6,7 +6,7 @@ namespace Code.Wheel
 {
     public class WheelController : IMovable, ITickable
     {
-        private readonly IMovableInput _input;
+        private IMovableInput _input;
 
         private readonly WheelModel _model;
         private readonly WheelView _view;
@@ -62,7 +62,9 @@ namespace Code.Wheel
 
         public void SetPosition(Vector2 position)
         {
-            SetAbsolutePosition((Vector3)position + _model.Transformation.Rotation.Value * Quaternion.Inverse(_model.LocalRotation) * _model.LocalPosition);
+            Quaternion rotationWithoutLocal = _model.Transformation.Rotation.Value * Quaternion.Inverse(_model.LocalRotation);
+            Vector2 absolutePosition = (Vector3)position + rotationWithoutLocal * _model.LocalPosition;
+            SetAbsolutePosition(absolutePosition);
         }
 
         public void SetRotation(Quaternion rotation)
@@ -70,12 +72,17 @@ namespace Code.Wheel
             SetAbsoluteRotation(rotation * _model.LocalRotation);
         }
 
+        public void SetInput(IMovableInput input)
+        {
+            _input = input;
+        }
+
         public void Tick()
         {
             if (IsSteerableWheel())
             {
                 Quaternion currentLocalRotation = Quaternion.Slerp(_model.LocalRotation, GetRotationByInput(), _model.RotationSpeed * Time.deltaTime);
-                SetLocalRotation(currentLocalRotation);
+                _model.LocalRotation = currentLocalRotation;
             }
         }
 
@@ -87,12 +94,6 @@ namespace Code.Wheel
         private void SetAbsoluteRotation(Quaternion rotation)
         {
             _model.Transformation.Rotation.Value = rotation;
-        }
-
-        private void SetLocalRotation(Quaternion localRotation)
-        {
-            _model.LocalRotation = localRotation;
-            //SetRotation(_model.Transformation.Rotation.Value);
         }
 
         private Quaternion GetRotationByInput()

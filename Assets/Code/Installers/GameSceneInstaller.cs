@@ -30,14 +30,14 @@ public class GameSceneInstaller : MonoInstaller
     [field: SerializeField]
     public PlayerInput PlayerInput { get; private set; }
 
-    [field: SerializeField]
-    public PlayerInputConfig InputData { get; private set; }
+    //[field: SerializeField]
+    //public PlayerInputConfig InputData { get; private set; }
 
     public override void InstallBindings()
     {
-        Container.Bind<PlayerInput>().FromInstance(PlayerInput).AsSingle();
+        //Container.Bind<PlayerInput>().FromInstance(PlayerInput).AsSingle();
 
-        Container.BindInterfacesAndSelfTo<PlayerInputConfig>().FromInstance(InputData).AsSingle();
+        //Container.BindInterfacesAndSelfTo<PlayerInputConfig>().FromInstance(InputData).AsSingle();
 
         Container.BindInterfacesAndSelfTo<MapConfig>().FromInstance(MapData).AsSingle();
 

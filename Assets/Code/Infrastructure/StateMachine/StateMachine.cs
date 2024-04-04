@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Zenject;
 
-namespace Assets.Code.Infrastructure.StateMachine
+namespace Code.Infrastructure.StateMachine
 {
     public class StateMachine : ITickable
     {
