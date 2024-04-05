@@ -20,15 +20,15 @@ namespace Code.Map.Tile
         public float AirResistance { get; }
 
         public TileModel(
-            TileBase objectTile, TileBase groundTile,
-            TileType type, float airResistance, float rate) :
-            this(objectTile, groundTile, Vector2Int.zero, type, airResistance, rate)
+            TileBase objectTile, TileBase groundTile, TileType type,
+            float elasticityRate, float frictionRate, float airResistance) :
+            this(objectTile, groundTile, Vector2Int.zero, type, elasticityRate, frictionRate, airResistance)
         { }
 
         public TileModel(
             TileBase objectTile, TileBase groundTile,
             Vector2Int position, TileType type,
-            float airResistance, float rate)
+            float elasticityRate, float frictionRate, float airResistance)
         {
             ObjectTile = objectTile;
             GroundTile = groundTile;
@@ -38,9 +38,9 @@ namespace Code.Map.Tile
 
             AirResistance = airResistance;
 
-            ElasticityRate = (type == TileType.Hill) ? rate : 0f;
+            ElasticityRate = elasticityRate;
 
-            FrictionRate = (type == TileType.Ground) ? rate : 0f;
+            FrictionRate = frictionRate;
         }
     }
 }

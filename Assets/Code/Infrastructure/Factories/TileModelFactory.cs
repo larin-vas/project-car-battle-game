@@ -17,8 +17,8 @@ namespace Code.Infrastructure.Factories
         public TileModel Create(Vector2Int position, TileConfig config)
         {
             return new TileModel(
-                config.ObjectTile, config.GroundTile,
-                position, config.Type, config.AirResistance, config.ElasticityRate);
+                config.ObjectTile, config.GroundTile, position, config.Type,
+                config.ElasticityRate, config.FrictionRate, config.AirResistance);
         }
     }
 }

@@ -13,14 +13,20 @@ namespace Code.Physics
 
         public float ElasticityRate { get; }
 
-        public CollisionInfo(Vector2 point, Vector2 objectForceVector, float collisionDamage)
+        public CollisionInfo(
+            Vector2 point, Vector2 objectForceVector,
+            float collisionDamage, float elasticityRate)
         {
             if (collisionDamage < 0)
                 throw new ArgumentOutOfRangeException(nameof(collisionDamage));
 
+            if (elasticityRate < 0 || elasticityRate > 1f)
+                throw new ArgumentOutOfRangeException(nameof(elasticityRate));
+
             Point = point;
             ObjectForceVector = objectForceVector;
             CollisionDamage = collisionDamage;
+            ElasticityRate = elasticityRate;
         }
     }
 }

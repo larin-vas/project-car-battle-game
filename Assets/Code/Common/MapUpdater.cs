@@ -8,9 +8,11 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Tilemap))]
 public class MapUpdater : MonoBehaviour, IPhysicObject
 {
-    [HideInInspector]
     public Vector2 Force { get; private set; }
+
     public float CollisionDamage { get; private set; }
+
+    public float ElasticityRate { get; private set; }
 
     [SerializeField]
     private Tilemap _tilemap;
@@ -39,6 +41,7 @@ public class MapUpdater : MonoBehaviour, IPhysicObject
     {
         Force = Vector2.zero;
         CollisionDamage = 0f;
+        ElasticityRate = 0f;
 
         if (_map == null)
             return;
@@ -74,6 +77,7 @@ public class MapUpdater : MonoBehaviour, IPhysicObject
         else
             _tilemap.SetTile((Vector3Int)newTile.Position, null);
 
+        ElasticityRate = newTile.ElasticityRate;
     }
 
     private void SubscribeToMapChanges()

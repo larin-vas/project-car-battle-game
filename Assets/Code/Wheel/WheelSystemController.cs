@@ -128,13 +128,12 @@ namespace Code.Wheel
 
             float Coefficient = 1f / (1f + Mathf.Exp(-_transportModel.Mass * (currentDistance - baseDistance)));
 
-            float friction = _worldProperties.GetFrictionByPosition(Vector2Int.CeilToInt(wheel.GetPosition()));
 
             float baseWheelSliding =
                 _constants.MinWheelSlidingCoefficient +
                 Coefficient * (_constants.MaxWheelSlidingCoefficient - _constants.MinWheelSlidingCoefficient);
 
-            return baseWheelSliding * friction;
+            return baseWheelSliding;
         }
 
         private Vector2 CalculateCarCenter()
@@ -154,6 +153,8 @@ namespace Code.Wheel
             float handbrakeCoefficient = (wheel.IsLockedOnHandbrake() && _input.Handbrake) ? 0f : 1f;
             float brakeCoefficient = _input.Brake ? 0f : 1f;
             float driveWheelCoefficient = wheel.IsDriveWheel() ? _transportModel.CurrentAcceleration * _input.Movement * Time.deltaTime : 0f;
+            float friction = _worldProperties.GetFrictionByPosition(Vector2Int.CeilToInt(wheel.GetPosition()));
+
 
             Vector2 wheelDirection =
                 wheel.GetRotation() * Vector3.up *
@@ -173,7 +174,7 @@ namespace Code.Wheel
                 CalculateWheelSlidingCoefficient(wheel) *
                 CalculateInertiaSeparationCoefficient();
 
-            return forceDirection;
+            return forceDirection * friction;
         }
 
         private float CalculateInertiaReductionCoefficient(WheelController wheel)

@@ -82,7 +82,9 @@ namespace Code.AI.Pathfinding
 
         private bool IsCoordinatePassable(Vector2Int position)
         {
-            return _map[position.x, position.y].Value.Type == TileType.Ground;
+            return
+                IsCoordinateCorrect(position) &&
+                _map[position.x, position.y].Value.Type == TileType.Ground;
         }
 
         private bool IsCoordinateCorrect(Vector2Int position)

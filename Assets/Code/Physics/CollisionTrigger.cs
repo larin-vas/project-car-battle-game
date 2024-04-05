@@ -18,29 +18,29 @@ namespace Code.Physics
         private readonly Collider2D[] _ignoredColliders;
 
         public CollisionTrigger(
-            ConstantsService constants, 
+            ConstantsService constants,
             Collider2D collider) :
             this(constants, collider, new ContactFilter2D())
         { }
 
         public CollisionTrigger(
-            ConstantsService constants, 
-            Collider2D collider, 
+            ConstantsService constants,
+            Collider2D collider,
             ContactFilter2D filter) :
             this(constants, collider, filter, null)
         { }
 
         public CollisionTrigger(
-            ConstantsService constants, 
-            Collider2D collider, 
+            ConstantsService constants,
+            Collider2D collider,
             params Collider2D[] ignoredColliders) :
             this(constants, collider, new ContactFilter2D(), ignoredColliders)
         { }
 
         public CollisionTrigger(
-            ConstantsService constants, 
-            Collider2D collider, 
-            ContactFilter2D filter, 
+            ConstantsService constants,
+            Collider2D collider,
+            ContactFilter2D filter,
             params Collider2D[] ignoredColliders)
         {
             _constants = constants;
@@ -67,8 +67,9 @@ namespace Code.Physics
 
                 if (collider.TryGetComponent(out IPhysicObject transformableObject))
                 {
-                    CollisionInfo collision = 
-                        new CollisionInfo(distance.pointA, transformableObject.Force, transformableObject.CollisionDamage);
+                    CollisionInfo collision = new CollisionInfo(
+                        distance.pointA, transformableObject.Force,
+                        transformableObject.CollisionDamage, transformableObject.ElasticityRate);
 
                     collisions.Add(collision);
                 }

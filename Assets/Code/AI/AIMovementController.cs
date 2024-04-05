@@ -74,6 +74,7 @@ namespace Code.AI
 
                 // Calculate the angle between the current turn and the target direction
                 float angleDifference = CalculateAngleDifference(controlledObject, moveDirection);
+                Debug.Log(angleDifference+" | "+path[_model.PathSegmentIndex] + " => " + controlledObject.GetPosition());
 
                 _input.Rotation = CalculateRotation(angleDifference);
 
@@ -112,7 +113,7 @@ namespace Code.AI
 
         private float CalculateMovement(float angleDifference)
         {
-            return (angleDifference < _constants.AngleToChangeDirection) ? 1f : -1f;
+            return (Mathf.Abs(angleDifference) < _constants.AngleToChangeDirection) ? 1f : -1f;
         }
     }
 }

@@ -32,6 +32,6 @@ MonoBehaviour:
     <ObjectTile>k__BackingField: {fileID: 11400000, guid: 37ca472e56cebf142a2600eed0e82424, type: 2}
     <GroundTile>k__BackingField: {fileID: 11400000, guid: 98abb486a2fa7504ebfa6cf8bb5aa9f4, type: 2}
     <Type>k__BackingField: 1
-    <ElasticityRate>k__BackingField: 0.5
+    <ElasticityRate>k__BackingField: 0.1
     <FrictionRate>k__BackingField: 1
     <AirResistance>k__BackingField: 5000
