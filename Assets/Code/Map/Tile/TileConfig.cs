@@ -22,7 +22,7 @@ namespace Code.Map.Tile
         [field: SerializeField, Range(0f, 1f)]
         public float FrictionRate { get; private set; }
 
-        [field: SerializeField, Min(0f)]
+        [field: SerializeField, Range(0f, 1f)]
         public float AirResistance { get; private set; }
     }
 }

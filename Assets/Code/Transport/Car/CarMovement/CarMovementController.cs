@@ -205,7 +205,7 @@ namespace Code.Transport.Car.CarMovement
 
         private Vector2 ApplyAirResistance(Vector2 force)
         {
-            return force.normalized * Mathf.Abs(force.magnitude - force.magnitude * force.magnitude / _worldProperties.GetAirResistanceByPosition(Vector2Int.CeilToInt(GetPosition())));
+            return force.normalized * Mathf.Abs(force.magnitude - force.magnitude * force.magnitude * _worldProperties.GetAirResistanceByPosition(Vector2Int.CeilToInt(GetPosition())));
         }
 
         private void RotateAroundPoint(Vector2 rotationCenter, Quaternion newRotation)
