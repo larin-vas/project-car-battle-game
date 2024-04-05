@@ -85,7 +85,8 @@ namespace Code.Wheel
         {
             if (IsSteerableWheel())
             {
-                Quaternion currentLocalRotation = Quaternion.Slerp(_model.LocalRotation, GetRotationByInput(), _model.RotationSpeed * Time.deltaTime);
+                Quaternion inputRotation = GetRotationByInput();
+                Quaternion currentLocalRotation = Quaternion.Lerp(_model.LocalRotation, inputRotation, _model.RotationSpeed * Time.deltaTime);
                 _model.LocalRotation = currentLocalRotation;
             }
         }

@@ -34,7 +34,7 @@ namespace Code.Infrastructure.Factories
 
             ProjectileModel model = new ProjectileModel(transformation, directionVector, damage, config.Speed);
 
-            view.PhysicUpdater.Construct(transformation, directionVector, damage);
+            view.PhysicUpdater.Construct(transformation, directionVector, damage, new Observable<float>(0f), _ignoredCollider);
 
             ContactFilter2D contactFilter = new ContactFilter2D();
             int layerToIgnore = Physics2D.GetLayerCollisionMask(view.gameObject.layer);

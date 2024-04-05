@@ -52,6 +52,8 @@ namespace Code.Transport.Car.CarHealth
             float newHealthPoints = GetCurrentHealth() - collision.CollisionDamage;
 
             _model.CurrentHealthPoints = Mathf.Clamp(newHealthPoints, 0f, _model.MaxHealthPoints);
+
+            Debug.Log("HP: " + _model.CurrentHealthPoints);
         }
     }
 }

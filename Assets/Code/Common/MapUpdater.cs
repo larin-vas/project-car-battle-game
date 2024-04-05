@@ -14,6 +14,8 @@ public class MapUpdater : MonoBehaviour, IPhysicObject
 
     public float ElasticityRate { get; private set; }
 
+    public Collider2D ParentCollider { get; private set; }
+
     [SerializeField]
     private Tilemap _tilemap;
 
@@ -42,6 +44,7 @@ public class MapUpdater : MonoBehaviour, IPhysicObject
         Force = Vector2.zero;
         CollisionDamage = 0f;
         ElasticityRate = 0f;
+        ParentCollider = null;
 
         if (_map == null)
             return;

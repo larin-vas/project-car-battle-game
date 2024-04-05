@@ -10,11 +10,14 @@ public class PhysicObjectUpdater : MonoBehaviour, IPhysicObject
 
     public float ElasticityRate => _elasticityRate.Value;
 
+    public Collider2D ParentCollider => _parentCollider;
+
     private Transformation _transformation;
 
     private Observable<Vector2> _forceVector;
     private Observable<float> _collisionDamage;
     private Observable<float> _elasticityRate;
+    private Collider2D _parentCollider;
 
     public void Construct(Transformation transformation)
     {
@@ -32,13 +35,22 @@ public class PhysicObjectUpdater : MonoBehaviour, IPhysicObject
     }
 
     public void Construct(
-        Transformation transformation, Observable<Vector2> forceVector, 
+        Transformation transformation, Observable<Vector2> forceVector,
         Observable<float> collisionDamage, Observable<float> elasticityRate)
+    {
+        Construct(transformation, forceVector, collisionDamage, elasticityRate, null);
+    }
+
+    public void Construct(
+        Transformation transformation, Observable<Vector2> forceVector,
+        Observable<float> collisionDamage, Observable<float> elasticityRate,
+        Collider2D parentCollider)
     {
         _transformation = transformation;
         _forceVector = forceVector;
         _collisionDamage = collisionDamage;
         _elasticityRate = elasticityRate;
+        _parentCollider = parentCollider;
 
         _transformation.Position.OnChanged += SetPosition;
         _transformation.Rotation.OnChanged += SetRotation;

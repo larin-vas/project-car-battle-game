@@ -69,8 +69,6 @@ namespace Code.Wheel
 
         private bool IsRotationUnderMax(Quaternion rotation)
         {
-            if (rotation.eulerAngles.y > 0 || rotation.eulerAngles.x > 0)
-                Debug.Log(rotation.eulerAngles.z + " | " + rotation.eulerAngles.y + " | " + rotation.eulerAngles.z);
             return (Mathf.Abs(rotation.eulerAngles.z) <= MaxRotationAngle) ||
                    (360f - Mathf.Abs(rotation.eulerAngles.z) <= MaxRotationAngle);
         }

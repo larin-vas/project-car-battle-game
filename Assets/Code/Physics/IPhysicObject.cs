@@ -9,5 +9,7 @@ namespace Code.Physics
         public float CollisionDamage { get; }
 
         public float ElasticityRate { get; }
+
+        public Collider2D ParentCollider { get; }
     }
 }

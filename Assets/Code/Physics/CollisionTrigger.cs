@@ -58,14 +58,15 @@ namespace Code.Physics
 
             for (int i = 0; i < colliderCount; i++)
             {
-                Collider2D collider = _collidersBuffer[i];
+                Collider2D collisionCollider = _collidersBuffer[i];
 
-                if (_ignoredColliders != null && _ignoredColliders.Contains(collider))
+                if (_ignoredColliders != null && _ignoredColliders.Contains(collisionCollider))
                     continue;
 
-                ColliderDistance2D distance = _collider.Distance(collider);
+                ColliderDistance2D distance = _collider.Distance(collisionCollider);
 
-                if (collider.TryGetComponent(out IPhysicObject transformableObject))
+                if (collisionCollider.TryGetComponent(out IPhysicObject transformableObject) &&
+                   transformableObject.ParentCollider != _collider)
                 {
                     CollisionInfo collision = new CollisionInfo(
                         distance.pointA, transformableObject.Force,
