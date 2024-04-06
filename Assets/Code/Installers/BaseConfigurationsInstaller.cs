@@ -14,10 +14,19 @@ namespace Code.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<PhysicsConfig>().FromInstance(_physicsConfig).AsSingle();
+            InstallPhysicsConfig();
 
-            Container.BindInterfacesAndSelfTo<ConstantsConfig>().FromInstance(_constantsConfig).AsSingle();
+            InstallConstantsConfig();
         }
 
+        private void InstallPhysicsConfig()
+        {
+            Container.BindInterfacesAndSelfTo<PhysicsConfig>().FromInstance(_physicsConfig).AsSingle();
+        }
+
+        private void InstallConstantsConfig()
+        {
+            Container.BindInterfacesAndSelfTo<ConstantsConfig>().FromInstance(_constantsConfig).AsSingle();
+        }
     }
 }

@@ -8,8 +8,18 @@ namespace Code.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<PhysicsService>().AsSingle();
+            InstallPhysicsService();
 
+            InstallConstantsService();
+        }
+
+        private void InstallPhysicsService()
+        {
+            Container.BindInterfacesAndSelfTo<PhysicsService>().AsSingle();
+        }
+
+        private void InstallConstantsService()
+        {
             Container.BindInterfacesAndSelfTo<ConstantsService>().AsSingle();
         }
     }

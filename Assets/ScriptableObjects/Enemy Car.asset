@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy Car
   m_EditorClassIdentifier: 
   <CarView>k__BackingField: {fileID: 4107235813603685845, guid: cb1f6c218e808534694be488510f0239, type: 3}
-  <CollisionDamage>k__BackingField: 1
+  <CollisionDamage>k__BackingField: 0
   <MaxHealthPoints>k__BackingField: 100
   <MaxAcceleration>k__BackingField: 1
   <AccelerationRate>k__BackingField: 0.2
@@ -56,7 +56,7 @@ MonoBehaviour:
   - <GunView>k__BackingField: {fileID: 4454817131071477769, guid: 3ee274ff8b248444facb6707861bb086, type: 3}
     <LocalPosition>k__BackingField: {x: 0, y: 0}
     <RotationSpeed>k__BackingField: 10
-    <ReloadTime>k__BackingField: 3
+    <ReloadTime>k__BackingField: 100000
     <ProjectileConfig>k__BackingField:
       <ProjectileView>k__BackingField: {fileID: 6050328295896178722, guid: 93cfceb3b9e2aeb4da42af88e74da4d1, type: 3}
       <Damage>k__BackingField: 10

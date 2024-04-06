@@ -100,12 +100,12 @@ namespace Code.Combat.Gun
         {
             List<ProjectileController> activeProjectiles = _projectilePool.GetAllActiveObjects().ToList();
 
-            foreach (var projectile in activeProjectiles)
+            foreach (ProjectileController projectile in activeProjectiles)
             {
-                projectile.Tick();
-
                 if (projectile.HasHit)
                     _projectilePool.ReturnToPool(projectile);
+                else
+                    projectile.Tick();
             }
         }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Car
   m_EditorClassIdentifier: 
   <CarView>k__BackingField: {fileID: 4107235813603685845, guid: 22914b32740c5a04db743dfdafb0177c, type: 3}
-  <CollisionDamage>k__BackingField: 1
+  <CollisionDamage>k__BackingField: 0
   <MaxHealthPoints>k__BackingField: 100
   <MaxAcceleration>k__BackingField: 1
   <AccelerationRate>k__BackingField: 0.2
